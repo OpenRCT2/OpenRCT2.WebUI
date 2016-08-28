@@ -13,6 +13,8 @@ class App extends Component {
         <p className="App-intro">
           Coming soon.
         </p>
+
+        {this.props.children}
       </div>
     );
   }
