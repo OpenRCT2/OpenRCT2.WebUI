@@ -8,16 +8,8 @@ class App extends Component {
       <div className="App">
         <SideBar />
         <div className="MainContent">
-          <h1>Servers</h1>
-          <p className="App-intro">
-            Coming soon.
-          </p>
+          {this.props.children}
         </div>
-        <p className="App-intro">
-          Coming soon.
-        </p>
-
-        {this.props.children}
       </div>
     );
   }
