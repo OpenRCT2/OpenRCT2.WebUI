@@ -5,6 +5,15 @@ import * as actions from '../actions';
 import { getServers, getErrorMessage, getIsFetching } from '../reducers';
 import FetchError from './FetchError';
 
+class ServerItem extends Component {
+  render() {
+    const { server } = this.props;
+    return (
+      <li>{server.name}</li>
+    )
+  }
+}
+
 class Servers extends Component {
   componentDidMount() {
     this.fetchData();
@@ -46,7 +55,7 @@ class Servers extends Component {
         </p>
         <ul>
           {servers.map((server, index) =>
-            <li key={index}>{server.name}</li>
+            <ServerItem key={index} server={server} />
           )}
         </ul>
       </div>
