@@ -4,7 +4,7 @@ const createServerList = () => {
  const servers = (state = [], action) => {
    switch (action.type) {
      case 'FETCH_SERVERS_SUCCESS':
-       return action.response.result
+       return action.response
      default:
        return state;
    }

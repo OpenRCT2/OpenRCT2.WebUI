@@ -1,4 +1,5 @@
-import { normalize } from 'normalizr';
+// eslint-disable-next-line
+import { normalize } from 'normalizr';// eslint-disable-next-line
 import * as schema from './schema';
 import * as api from '../api';
 import { getIsFetching } from '../reducers';
@@ -16,7 +17,7 @@ export const fetchServers = () => (dispatch, getState) => {
     response => {
       dispatch({
         type: 'FETCH_SERVERS_SUCCESS',
-        response: normalize(response, schema.arrayOfServers),
+        response: response,
       });
     },
     error => {
