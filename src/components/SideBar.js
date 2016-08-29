@@ -12,10 +12,10 @@ class SideBar extends Component {
           <h2>OpenRCT2</h2>
         </div>
         <div className="Navigation">
-          <ul role="nav">
-            <li><Link to="/servers">Servers</Link></li>
-            <li><Link to="/objects">Objects</Link></li>
-            <li><Link to="/packs">Packs</Link></li>
+          <ul>
+            <li><Link activeClassName="activePage" to="/servers">Servers</Link></li>
+            <li><Link activeClassName="activePage" to="/objects">Objects</Link></li>
+            <li><Link activeClassName="activePage" to="/packs">Packs</Link></li>
           </ul>
         </div>
       </div>
