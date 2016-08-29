@@ -4,12 +4,17 @@ import { withRouter } from 'react-router';
 import * as actions from '../actions';
 import { getServers, getErrorMessage, getIsFetching } from '../reducers';
 import FetchError from './FetchError';
+import './Servers.css';
 
 class ServerItem extends Component {
   render() {
     const { server } = this.props;
     return (
-      <li>{server.name}</li>
+      <li>
+        <div className="ServerItem-name">{server.name}</div>
+        <div className="ServerItem-players">{server.players} players</div>
+        <div className="ServerItem-description">{server.description}</div>
+      </li>
     )
   }
 }
@@ -50,10 +55,7 @@ class Servers extends Component {
     return (
       <div className="Servers">
         <h1>Servers</h1>
-        <p className="Servers-intro">
-          Servers list.
-        </p>
-        <ul>
+        <ul className="ul-stack Servers-list">
           {servers.map((server, index) =>
             <ServerItem key={index} server={server} />
           )}

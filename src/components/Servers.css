@@ -1,0 +1,33 @@
+.Servers-list > li {
+    border-top: 1px solid #ddd;
+    height: 44px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.Servers-list > li:hover {
+    background-color: #ddd;
+    transition: background-color 0.05s;
+}
+
+.ServerItem-name {
+    font-family: "Varela Round";
+    font-weight: bold;
+    margin-bottom: 6px;
+    float: left;
+}
+
+.ServerItem-players {
+    color: #555;
+    font-size: 70%;
+    float: left;
+    margin-left: 8px;
+    margin-top: 3px;
+}
+
+.ServerItem-description {
+    font-family: "Open Sans";
+    font-size: 85%;
+    margin-left: 16px;
+    clear: left;
+}
