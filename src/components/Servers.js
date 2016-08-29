@@ -45,8 +45,8 @@ class Servers extends Component {
           Servers list.
         </p>
         <ul>
-          {servers.map((server) =>
-            <li key={server.name}>{server.name}</li>
+          {servers.map((server, index) =>
+            <li key={index}>{server.name}</li>
           )}
         </ul>
       </div>
