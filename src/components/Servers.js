@@ -43,8 +43,12 @@ class Servers extends Component {
         <h1>Servers</h1>
         <p className="Servers-intro">
           Servers list.
-          {servers}
         </p>
+        <ul>
+          {servers.map((server) =>
+            <li key={server.name}>{server.name}</li>
+          )}
+        </ul>
       </div>
     );
   }

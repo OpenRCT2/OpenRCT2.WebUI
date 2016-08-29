@@ -4,7 +4,7 @@ export const fetchServers = () =>
     return response.json();
   }).then(function(json) {
     console.log('parsed json', json);
-    return json;
+    return json.servers;
   }).catch(function(ex) {
     console.log('parsing failed', ex);
     throw new Error(`Error: ${ex}`);
