@@ -52,11 +52,22 @@ class Servers extends Component {
         </div>
       );
     }
+
+    // Sort servers by # players (desc) and then name (asc)
+    let sortedServers = servers.sort((a, b) => {
+      if (a.players !== b.players) {
+        return b.players - a.players;
+      }
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
+
     return (
       <div className="Servers">
         <h1>Servers</h1>
         <ul className="ul-stack Servers-list">
-          {servers.map((server, index) =>
+          {sortedServers.map((server, index) =>
             <ServerItem key={index} server={server} />
           )}
         </ul>
