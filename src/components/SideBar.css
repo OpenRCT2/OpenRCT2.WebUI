@@ -1,5 +1,23 @@
 .SideBar {
-  background-color: #17141f;
-  text-align: center;
-  width: 200px;
+    background-color: #17141f;
+    text-align: center;
+    flex-shrink: 0;
+    width: 200px;
+}
+
+.Navigation-ul a {
+    color: #cbc8d0;
+    display: block;
+    padding: 8px 8px 8px 24px;
+    text-align: left;
+    text-decoration: none;
+}
+
+.Navigation-ul a:hover {
+    background-color: #302c3b;
+}
+
+.Navigation .activePage {
+    border-left: 4px #505c8b solid;
+    padding-left: 20px;
 }
