@@ -9,14 +9,17 @@ class SideBar extends Component {
       <div className="SideBar">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>OpenRCT2</h2>
+          <div className="App-header-text">OpenRCT2</div>
         </div>
         <div className="Navigation">
-          <ul>
+          <ul className="ul-stack Navigation-ul">
             <li><Link activeClassName="activePage" to="/servers">Servers</Link></li>
             <li><Link activeClassName="activePage" to="/objects">Objects</Link></li>
             <li><Link activeClassName="activePage" to="/packs">Packs</Link></li>
           </ul>
+        </div>
+        <div className="App-footer">
+          &copy; 2016 OpenRCT2 Developers
         </div>
       </div>
     );

@@ -1,9 +1,10 @@
+const API_URL = "https://api.openrct2.website";
+const API_URL_SERVERS = `${API_URL}/servers`;
+
 export const fetchServers = () =>
-  fetch('https://api.openrct2.website/servers')
-  .then(function(response) {
-    return response.json();
-  }).then(function(json) {
-    return json.servers;
-  }).catch(function(ex) {
-    throw new Error(`Error: ${ex}`);
-  })
+    fetch(API_URL_SERVERS)
+        .then((response) => response.json())
+        .then((json) => json.servers)
+        .catch((ex) => {
+            throw new Error(`Error: ${ex}`);
+        })
