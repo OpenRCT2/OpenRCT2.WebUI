@@ -14,10 +14,12 @@
 }
 
 .Navigation-ul a:hover {
-    background-color: #302c3b;
+    background-color: #201c2b;
+    transition: background-color 0.2s;
 }
 
 .Navigation .activePage {
-    border-left: 4px #505c8b solid;
+    background-color: #201c2b;
+    border-left: 4px #6441a4 solid;
     padding-left: 20px;
 }
