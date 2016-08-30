@@ -31,7 +31,7 @@ class Servers extends Component {
 
   render() {
     const { isFetching, errorMessage, servers } = this.props;
-    if (isFetching && !servers.length) {
+    if (isFetching && servers.length == 0) {
       return (
         <div className="Servers">
           <h1>Servers</h1>
@@ -41,7 +41,7 @@ class Servers extends Component {
         </div>
       );
     }
-    if (errorMessage && !servers.length) {
+    if (errorMessage && servers.length == 0) {
       return (
         <div className="Servers">
           <h1>Servers</h1>
