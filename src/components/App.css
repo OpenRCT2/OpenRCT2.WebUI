@@ -32,9 +32,14 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.App-footer {
+  color: white;
+  font-family: Open Sans, sans-serif;
+  font-size: 12px;
+  font-weight: lighter;
+  position: absolute;
+  bottom: 12px;
+  width: 200px;
 }
 
 h1 {

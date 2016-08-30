@@ -18,6 +18,9 @@ class SideBar extends Component {
             <li><Link activeClassName="activePage" to="/packs">Packs</Link></li>
           </ul>
         </div>
+        <div className="App-footer">
+          &copy; 2016 OpenRCT2 Developers
+        </div>
       </div>
     );
   }
