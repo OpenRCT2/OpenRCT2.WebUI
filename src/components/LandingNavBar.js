@@ -28,12 +28,12 @@ const LandingNavBar = (props) =>
               style={buttonStyle}
               containerElement={<Link to="/logout"/>}
               label='Log out'/>
-            : null
+            :
+            <FlatButton
+              style={buttonStyle}
+              containerElement={<Link to="/signup" />}
+              label='Sign up'/>
           }
-          <FlatButton
-            style={buttonStyle}
-            containerElement={<Link to="/signup" />}
-            label='Sign up'/>
       </div>
 
 export default LandingNavBar;
