@@ -23,6 +23,21 @@ footer .external:hover {
     transition: opacity 0.4s;
 }
 
+footer .sponsor {
+    border-top: 1px solid #ddd;
+    clear: both;
+    color: #888;
+    margin-top: 8px;
+    padding: 8px 0;
+    overflow: hidden;
+}
+
+footer .sponsor img {
+    margin: -4px 0 0 4px;
+    height: 20px;
+    overflow: hidden;
+}
+
 .container-main {
     background-color: #fafafa;
     border-radius: 0 0 12px 12px;
