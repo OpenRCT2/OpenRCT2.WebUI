@@ -21,7 +21,7 @@ export class TopBar extends Component {
           <div className="text-light">
             <Link className="no-link-decor" to="/signout">
               <i className="fa fa-sign-out" />
-            </Link> {profile.user}
+            </Link> {profile.name}
           </div>
         )
       } else {

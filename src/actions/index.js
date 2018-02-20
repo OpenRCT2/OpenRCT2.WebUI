@@ -3,6 +3,7 @@ import { normalize } from 'normalizr';// eslint-disable-next-line
 import * as schema from './schema';
 import * as api from '../api';
 import { getIsFetching } from '../reducers';
+import { ProfileState } from '../reducers/profile';
 
 export const fetchServers = () => (dispatch, getState) => {
   if (getIsFetching(getState())) {
@@ -29,10 +30,26 @@ export const fetchServers = () => (dispatch, getState) => {
   );
 };
 
-export const signIn = (username, password) => {
-  return {
-    type: 'PROFILE_SIGNIN',
-    username,
-    password
+export const signIn = (username, password) => (dispatch, getState) => {
+  let profile = getState().profile;
+  if (profile.state === ProfileState.DEFAULT) {
+    dispatch({
+      type: 'SIGN_IN_REQUEST',
+    });
+    return api.signIn(username, password)
+      .then(response => {
+        dispatch({
+          type: 'SIGN_IN_SUCCESS',
+          response: response,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: 'SIGN_IN_FAILURE',
+          message: error.message || 'Something went wrong.',
+        });
+        throw new Error();
+      });
   }
+  return Promise.resolve();
 }

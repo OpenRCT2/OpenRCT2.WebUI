@@ -8,3 +8,15 @@ export const fetchServers = () =>
         .catch((ex) => {
             throw new Error(`Error: ${ex}`);
         })
+
+export const signIn = (username, password) =>
+    // TODO replace with real API end point
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (username.toLowerCase() === 'intelorca' && password === 'donkey') {
+                resolve({id: 1, name: 'IntelOrca'});
+            } else {
+                reject({});
+            }
+        }, 250);
+    });

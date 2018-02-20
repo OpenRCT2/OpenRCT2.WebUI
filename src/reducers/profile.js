@@ -1,12 +1,25 @@
-export const profile = (state = null, action) => {
+export const ProfileState = {
+  DEFAULT: 'DEFAULT',
+  SIGNING_IN: 'SIGNING_IN',
+  SIGNED_IN: 'SIGNED_IN'
+}
+
+const initialState = {
+  state: ProfileState.DEFAULT
+};
+
+export const profile = (state = initialState, action) => {
   switch (action.type) {
-    case 'PROFILE_SIGNIN':
-      return {id: 1, user: action.username};
+    case 'SIGN_IN_SUCCESS':
+      return {
+        state: ProfileState.SIGNED_IN,
+        ...action.response
+      }
     default:
       return state;
   }
 }
 
 export const isSignedIn = (profile) => {
-  return profile !== null;
+  return profile.state === ProfileState.SIGNED_IN;
 }

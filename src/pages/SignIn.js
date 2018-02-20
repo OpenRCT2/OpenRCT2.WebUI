@@ -3,8 +3,20 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { PageBanner } from '../components/PageBanner';
+import { isSignedIn } from '../reducers/profile';
 
 export class SignInPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {showAlert: false};
+  }
+
+  componentWillMount() {
+    if (isSignedIn(this.props.profile)) {
+      this.props.history.push("/")
+    }
+  }
 
   signInClick = (e) => {
     e.preventDefault();
@@ -12,15 +24,33 @@ export class SignInPage extends Component {
     const { signIn } = this.props;
     let username = this.refs.inputEmail.value;
     let password = this.refs.inputPassword.value;
-    signIn(username, password);
-    this.props.history.push("/")
+    if (username && password) {
+      signIn(username, password)
+        .then(() => {
+          this.props.history.push("/")
+        })
+        .catch(() => {
+          this.setState(prevState => ({
+            showAlert: true
+          }));
+        });
+    }
   }
 
   render() {
+    function Alert(props) {
+      if (!props.visible) return null;
+      return (
+        <div className="alert alert-danger mx-auto" role="alert" style={{maxWidth: 400}}>
+          Your username or password was incorrect.
+        </div>
+      )
+    }
     return (
       <div>
         <PageBanner image="signin">Sign in</PageBanner>
         <div className="container container-main">
+          <Alert visible={this.state.showAlert} />
           <div className="card mx-auto" style={{maxWidth: 400}}>
             <div className="card-body">
               <form>
@@ -47,7 +77,7 @@ SignInPage.propTypes = {
 };
 
 const mapStateToProps = (state, { params }) => {
-  return { };
+  return { profile: state.profile };
 };
 
 SignInPage = withRouter(connect(
