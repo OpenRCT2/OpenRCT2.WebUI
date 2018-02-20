@@ -1,7 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 import { PageBanner } from '../components/PageBanner';
 
 export class SignInPage extends Component {
+
+  signInClick = (e) => {
+    e.preventDefault();
+
+    const { signIn } = this.props;
+    let username = this.refs.inputEmail.value;
+    let password = this.refs.inputPassword.value;
+    signIn(username, password);
+    this.props.history.push("/")
+  }
+
   render() {
     return (
       <div>
@@ -11,14 +25,14 @@ export class SignInPage extends Component {
             <div className="card-body">
               <form>
                 <div className="form-group">
-                  <label for="signin-email">Email address</label>
-                  <input type="email" className="form-control" id="signin-email" />
+                  <label htmlFor="signin-email">Email address</label>
+                  <input type="email" className="form-control" id="signin-email" ref="inputEmail" />
                 </div>
                 <div className="form-group">
-                  <label for="signin-password">Password</label>
-                  <input type="password" className="form-control" id="signin-password" />
+                  <label htmlFor="signin-password">Password</label>
+                  <input type="password" className="form-control" id="signin-password" ref="inputPassword" />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary" onClick={this.signInClick}>Submit</button>
               </form>
             </div>
           </div>
@@ -27,3 +41,16 @@ export class SignInPage extends Component {
     );
   }
 }
+
+SignInPage.propTypes = {
+  signIn: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state, { params }) => {
+  return { };
+};
+
+SignInPage = withRouter(connect(
+  mapStateToProps,
+  actions
+)(SignInPage));

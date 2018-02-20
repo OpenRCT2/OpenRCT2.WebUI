@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import { profile } from './profile';
 import createServerList, * as fromServerList from './servers'; // eslint-disable-next-line
 import createObjectList, * as fromObjectList from './objects';
 
@@ -7,6 +8,7 @@ const servers = createServerList()
 const objects = createObjectList()
 
 const orct = combineReducers({
+  profile,
   servers,
   objects,
 });

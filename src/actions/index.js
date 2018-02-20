@@ -28,3 +28,11 @@ export const fetchServers = () => (dispatch, getState) => {
     }
   );
 };
+
+export const signIn = (username, password) => {
+  return {
+    type: 'PROFILE_SIGNIN',
+    username,
+    password
+  }
+}

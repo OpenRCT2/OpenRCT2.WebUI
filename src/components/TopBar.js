@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { isSignedIn } from '../reducers/profile';
 import logo from '../img/logo.png';
 
 let navButtons = [
-  {text: "About", "link": "/about"},
-  {text: "Download", "link": "/download"},
-  {text: "Docs", "link": "/docs"},
-  {text: "CoasterCloud", "link": "/coastercloud"},
-  {text: "Servers", "link": "/servers"},
-  {text: "Forums", "link": "/forums"},
+     {text: "About", link: "/about"},
+     {text: "Download", link: "/download"},
+     {text: "Docs", link: "/docs"},
+     {text: "CoasterCloud", link: "/coastercloud"},
+     {text: "Servers", link: "/servers"},
+     {text: "Forums", link: "/forums"},
 ]
 
 export class TopBar extends Component {
   render() {
+    let renderProfile = (profile) => {
+      if (isSignedIn(profile)) {
+        return (
+          <div className="text-light">
+            <Link className="no-link-decor" to="/signout">
+              <i className="fa fa-sign-out" />
+            </Link> {profile.user}
+          </div>
+        )
+      } else {
+        return (
+          <Link className="text-light no-link-decor" to="/signin">
+            <i className="fa fa-sign-in" /> Sign in
+          </Link>
+        )
+      }
+    }
+
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
@@ -28,17 +48,23 @@ export class TopBar extends Component {
               {navButtons.map((btn, index) => {
                 let isActive = (location.pathname === btn.link);
                 return (
-                  <li className={"nav-item " + (isActive ? "active" : "")}>
+                  <li key={index} className={"nav-item " + (isActive ? "active" : "")}>
                     <Link className="nav-link" to={btn.link}>{btn.text}</Link>
                   </li>)
               })}
             </ul>
-            <Link className="text-light no-link-decor" to="/signin">
-              <i className="fa fa-sign-in" /> Sign in
-            </Link>
+            {renderProfile(this.props.profile)}
           </div>
         </div>
       </nav>
     );
   }
 }
+
+const mapStateToProps = (state, { params }) => {
+  return { profile: state.profile };
+};
+
+TopBar = withRouter(connect(
+  mapStateToProps
+)(TopBar));
