@@ -1,8 +1,9 @@
 .Servers-list > li {
     border-top: 1px solid #ddd;
-    height: 44px;
+    height: 70px;
     padding: 8px;
     cursor: pointer;
+    list-style: none;
 }
 
 .Servers-list > li:hover {

@@ -3,8 +3,19 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
 import { getServers, getErrorMessage, getIsFetching } from '../reducers';
-import FetchError from './FetchError';
 import './Servers.css';
+
+const FetchError = ({ message, onRetry }) => (
+  <div>
+    <p>Could not fetch servers. {message}</p>
+    <button className="btn btn-primary btn-sm" onClick={onRetry}>Retry</button>
+  </div>
+);
+
+FetchError.propTypes = {
+  message: PropTypes.string.isRequired,
+  onRetry: PropTypes.func.isRequired,
+};
 
 class ServerItem extends Component {
   render() {
@@ -30,49 +41,55 @@ class Servers extends Component {
   }
 
   render() {
-    const { isFetching, errorMessage, servers } = this.props;
-    if (isFetching && servers.length == 0) {
-      return (
-        <div className="Servers">
-          <h1>Servers</h1>
-          <p className="Servers-intro">
-            Loading...
-          </p>
-        </div>
-      );
-    }
-    if (errorMessage && servers.length == 0) {
-      return (
-        <div className="Servers">
-          <h1>Servers</h1>
+    let serverProps = this.props;
+    function ServerList() {
+      const { isFetching, errorMessage, servers } = serverProps;
+      if (isFetching && servers.length === 0) {
+        return (
+          <p className="Servers-intro">Loading...</p>
+        );
+      }
+      if (errorMessage && servers.length === 0) {
+        return (
           <FetchError
             message={errorMessage}
             onRetry={() => this.fetchData()}
           />
-        </div>
-      );
-    }
-
-    // Sort servers by # players (desc) and then name (asc)
-    let sortedServers = servers.sort((a, b) => {
-      if (a.players !== b.players) {
-        return b.players - a.players;
+        );
       }
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
-      return 0;
-    });
 
-    return (
-      <div className="Servers">
-        <h1>Servers</h1>
+      // Sort servers by # players (desc) and then name (asc)
+      let sortedServers = servers.sort((a, b) => {
+        if (a.players !== b.players) {
+          return b.players - a.players;
+        }
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
+
+      return (
         <ul className="ul-stack Servers-list">
           {sortedServers.map((server, index) =>
             <ServerItem key={index} server={server} />
           )}
         </ul>
+      );
+    }
+
+    return (
+      <div>
+        <div className="container page-banner page-banner-servers">
+          <h1>Servers</h1>
+        </div>
+        <div className="container container-main">
+          <div className="Servers">
+            <h1>Servers</h1>
+            <ServerList />
+          </div>
+        </div>
       </div>
-    );
+    )
   }
 }
 

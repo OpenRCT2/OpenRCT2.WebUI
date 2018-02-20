@@ -1,4 +1,4 @@
-const API_URL = "https://api.openrct2.website";
+const API_URL = "https://api.openrct2d.io";
 const API_URL_SERVERS = `${API_URL}/servers`;
 
 export const fetchServers = () =>
