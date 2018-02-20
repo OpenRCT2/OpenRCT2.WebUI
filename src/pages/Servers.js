@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
 import { getServers, getErrorMessage, getIsFetching } from '../reducers';
+import { PageBanner } from '../components/PageBanner';
 import './Servers.css';
 
 const FetchError = ({ message, onRetry }) => (
@@ -79,12 +80,9 @@ export class ServersPage extends Component {
 
     return (
       <div>
-        <div className="container page-banner page-banner-servers">
-          <h1>Servers</h1>
-        </div>
+        <PageBanner image="servers">Servers</PageBanner>
         <div className="container container-main">
           <div className="Servers">
-            <h1>Servers</h1>
             <ServerList />
           </div>
         </div>

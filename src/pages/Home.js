@@ -7,7 +7,7 @@ export class HomePage extends Component {
   render() {
     return (
       <div>
-        <div id="home-banner" className="container">
+        <div id="home-banner" className="container page-banner page-banner-home">
             <div className="promo">
                 <img src={logo} alt="OpenRCT2" />
                 <strong>OpenRCT2</strong> is an open source re-implementation of RollerCoaster Tycoon 2.

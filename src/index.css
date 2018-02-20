@@ -41,7 +41,7 @@ footer .sponsor img {
 .container-main {
     background-color: #fafafa;
     border-radius: 0 0 12px 12px;
-    padding-top: 12px;
+    padding: 12px;
     min-height: 50px;
     overflow: hidden;
 }
@@ -60,9 +60,11 @@ footer .sponsor img {
     text-align: center;
 }
 
-.page-banner-about { background: url('img/banner_about.png'); }
-.page-banner-content { background: url('img/banner_content.png'); }
-.page-banner-servers { background: url('img/banner_servers.png'); }
+.page-banner-home { background-image: url('img/banners/home.png'); }
+.page-banner-about { background-image: url('img/banners/about.png'); }
+.page-banner-coastercloud { background-image: url('img/banners/coastercloud.png'); }
+.page-banner-servers { background-image: url('img/banners/servers.png'); }
+.page-banner-signin { background-image: url('img/banners/signin.png'); }
 
 .no-link-decor {
     color: inherit;

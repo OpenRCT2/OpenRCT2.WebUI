@@ -6,7 +6,6 @@ let navButtons = [
   {text: "About", "link": "/about"},
   {text: "Download", "link": "/download"},
   {text: "Docs", "link": "/docs"},
-  {text: "Content", "link": "/content"},
   {text: "CoasterCloud", "link": "/coastercloud"},
   {text: "Servers", "link": "/servers"},
   {text: "Forums", "link": "/forums"},
@@ -20,7 +19,7 @@ export class TopBar extends Component {
           <Link className="navbar-brand" to="/">
             <img src={logo} width="30" height="30" alt="" /> OpenRCT2
           </Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span className="navbar-toggler-icon"></span>
           </button>
 
