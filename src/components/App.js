@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import TopBar from './TopBar.js';
-import Footer from './Footer.js';
+import { TopBar } from './TopBar.js';
+import { Footer } from './Footer.js';
 
-class App extends Component {
+export class App extends Component {
   render() {
     return (
       <div>
@@ -13,5 +13,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

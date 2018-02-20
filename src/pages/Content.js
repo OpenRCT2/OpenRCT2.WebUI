@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 
-class NoMatch extends Component {
+export class ContentPage extends Component {
   render() {
     return (
       <div>
         <div className="container page-banner page-banner-content">
-          <h1></h1>
+          <h1>Content</h1>
         </div>
         <div className="container container-main">
-          <p>This page does not exist.</p>
+          <p>Content...</p>
         </div>
       </div>
     );
   }
 }
-
-export default NoMatch;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import sponser_do from '../img/digitalocean.png';
 
-class Footer extends Component {
+export class Footer extends Component {
   render() {
     function ExternalButton(props) {
       return (
@@ -23,5 +23,3 @@ class Footer extends Component {
     );
   }
 }
-
-export default Footer;

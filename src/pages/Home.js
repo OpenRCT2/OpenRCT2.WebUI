@@ -3,7 +3,7 @@ import './Home.css';
 import logo from '../img/logo.png';
 import thumb_case from '../img/thumb_case.jpg';
 
-class Home extends Component {
+export class HomePage extends Component {
   render() {
     return (
       <div>
@@ -56,5 +56,3 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;

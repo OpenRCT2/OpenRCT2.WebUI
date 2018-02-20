@@ -12,7 +12,7 @@ let navButtons = [
   {text: "Forums", "link": "/forums"},
 ]
 
-class TopBar extends Component {
+export class TopBar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,5 +43,3 @@ class TopBar extends Component {
     );
   }
 }
-
-export default TopBar;

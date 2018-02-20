@@ -30,7 +30,7 @@ class ServerItem extends Component {
   }
 }
 
-class Servers extends Component {
+export class ServersPage extends Component {
   componentDidMount() {
     this.fetchData();
   }
@@ -93,7 +93,7 @@ class Servers extends Component {
   }
 }
 
-Servers.propTypes = {
+ServersPage.propTypes = {
   errorMessage: PropTypes.string,
   servers: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
@@ -108,9 +108,7 @@ const mapStateToProps = (state, { params }) => {
   };
 };
 
-Servers = withRouter(connect(
+ServersPage = withRouter(connect(
   mapStateToProps,
   actions
-)(Servers));
-
-export default Servers;
+)(ServersPage));
