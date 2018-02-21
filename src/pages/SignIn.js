@@ -14,7 +14,7 @@ export class SignInPage extends Component {
 
   componentWillMount() {
     if (isSignedIn(this.props.profile)) {
-      this.props.history.push("/")
+      this.context.router.push("/");
     }
   }
 
@@ -27,7 +27,7 @@ export class SignInPage extends Component {
     if (username && password) {
       signIn(username, password)
         .then(() => {
-          this.props.history.push("/")
+          this.context.router.push("/")
         })
         .catch(() => {
           this.setState(prevState => ({
@@ -71,6 +71,10 @@ export class SignInPage extends Component {
     );
   }
 }
+
+SignInPage.contextTypes = {
+  router: PropTypes.object.isRequired,
+};
 
 SignInPage.propTypes = {
   signIn: PropTypes.func.isRequired,
