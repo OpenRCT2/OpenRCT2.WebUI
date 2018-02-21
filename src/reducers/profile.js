@@ -4,17 +4,27 @@ export const ProfileState = {
   SIGNED_IN: 'SIGNED_IN'
 }
 
-const initialState = {
-  state: ProfileState.DEFAULT
-};
+const initialState = (() => {
+  let profile = localStorage['profile'];
+  if (profile) {
+    try {
+      return JSON.parse(profile);
+    } catch (e) { }
+  }
+  return {
+    state: ProfileState.DEFAULT
+  };
+})();
 
 export const profile = (state = initialState, action) => {
   switch (action.type) {
     case 'SIGN_IN_SUCCESS':
-      return {
+      let newState = {
         state: ProfileState.SIGNED_IN,
         ...action.response
-      }
+      };
+      localStorage['profile'] = JSON.stringify(newState);
+      return newState;
     default:
       return state;
   }
