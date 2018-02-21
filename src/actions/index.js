@@ -51,3 +51,27 @@ export const signIn = (username, password) => (dispatch, getState) => {
   }
   return Promise.resolve();
 }
+
+export const signOut = () => (dispatch, getState) => {
+  let profile = getState().profile;
+  if (profile.state === ProfileState.SIGNED_IN) {
+    dispatch({
+      type: 'SIGN_OUT_REQUEST',
+    });
+    return api.signOut()
+      .then(response => {
+        dispatch({
+          type: 'SIGN_OUT_SUCCESS',
+          response: response,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: 'SIGN_OUT_FAILURE',
+          message: error.message || 'Something went wrong.',
+        });
+        throw new Error();
+      });
+  }
+  return Promise.resolve();
+}

@@ -25,6 +25,9 @@ export const profile = (state = initialState, action) => {
       };
       localStorage['profile'] = JSON.stringify(newState);
       return newState;
+    case 'SIGN_OUT_SUCCESS':
+      localStorage.removeItem('profile');
+      return initialState;
     default:
       return state;
   }

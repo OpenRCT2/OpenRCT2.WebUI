@@ -20,3 +20,11 @@ export const signIn = (username, password) =>
             }
         }, 250);
     });
+
+export const signOut = () =>
+    // TODO replace with real API end point
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({});
+        }, 250);
+    });
