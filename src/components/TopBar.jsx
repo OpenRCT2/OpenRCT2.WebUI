@@ -16,7 +16,9 @@ let navButtons = [
 
 export class TopBar extends Component {
   render() {
-    let renderProfile = (profile) => {
+    let profile = this.props.profile;
+
+    let renderProfile = () => {
       if (isSignedIn(profile)) {
         return (
           <div className="text-light">
@@ -38,7 +40,7 @@ export class TopBar extends Component {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <img src={logo} width="30" height="30" alt="" /> OpenRCT2
+            <img src={logo} width="30" height="30" alt="" /> {isSignedIn(profile) ? "" : "OpenRCT2"}
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span className="navbar-toggler-icon"></span>
@@ -54,7 +56,7 @@ export class TopBar extends Component {
                   </li>)
               })}
             </ul>
-            {renderProfile(this.props.profile)}
+            {renderProfile()}
           </div>
         </div>
       </nav>

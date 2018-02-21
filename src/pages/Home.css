@@ -53,3 +53,7 @@
     background: linear-gradient(to bottom, #98d466 0%,#86bd59 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#98d466', endColorstr='#86bd59',GradientType=0 );
 }
+
+.news-item:not(:last-child) {
+    margin-bottom: 8px;
+}

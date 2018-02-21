@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { ExternalLink } from '../components/ExternalLink'
 import './Home.css';
 import logo from '../img/logo.png';
-import thumb_case from '../img/thumb_case.jpg';
+
+export class NewsItem extends Component {
+    render() {
+        return (
+            <div className="card news-item">
+                <div className="card-body">
+                    <h5 className="card-title">{this.props.title}</h5>
+                    <h6 className="card-subtitle mb-2 text-muted">{this.props.date} by {this.props.author}</h6>
+                    {this.props.children}
+                </div>
+            </div>
+        )
+    }
+}
 
 export class HomePage extends Component {
   render() {
@@ -17,39 +29,25 @@ export class HomePage extends Component {
         <div className="container container-main">
             <div className="row">
                 <div className="col-8">
-                    <p>
-                        <strong>OpenRCT2</strong> is a free open source version of <strong>RollerCoaster Tycoon 2</strong>. It is strongly based on the original game and
-                        therefore looks like, and plays like the real deal. The game is rewritten into a modern language allowing people
-                        to <a href="/features">extend and improve</a> the game. Just like what happened with Transport Tycoon Deluxe which got remade into OpenTTD through a
-                        similar procedure. OpenTTD now has thousands of new future-proof features and OpenRCT2 will walk that path too eventually.
-                    </p>
-                    <div className="media">
-                        <div className="media-body">
-                            <p>
-                                The game is still in development and thus can be buggy – meaning it can (and will crash a lot). There is however a stable
-                                version (0.0.2) available to play. You do need to own a copy of the original game. (You can buy it
-                                from
-                                    <ExternalLink href="https://www.g2a.com/r/rct2">G2A</ExternalLink>,
-                                    <ExternalLink href="http://store.steampowered.com/app/285330/">Steam</ExternalLink>,
-                                    <ExternalLink href="http://www.gog.com/game/rollercoaster_tycoon_2">GOG</ExternalLink>,
-                                or maybe even your local game store. There are also ways to
-                                    <ExternalLink href="https://github.com/OpenRCT2/OpenRCT2/wiki/Required-RCT2-files#mini-game">play 100% free.</ExternalLink>)
-                                You need this because OpenRCT2 uses the original codes if that part hasn’t been remade, and it also uses the original image files to keep the authentic RCT2 look we all love.
-                            </p>
-                        </div>
-                        <figure className="figure align-self-start mr-3">
-                            <img className="figure-img img-fluid center rounded" src={thumb_case} alt="OpenRCT2 case" />
-                            <figcaption className="figure-caption text-right">OpenRCT2 fanart by
-                                <ExternalLink href="https://www.reddit.com/user/JumpingCactus">JumpingCactus</ExternalLink>.
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <p>
-                        Extra content can be found in our <a href="/content">Content Center</a> where you can choose from hundreds of new rides, rollercoasters and
-                        scenarios! You can also download our <a href="/download">OpenRCT2 Launcher</a> which carries a lot of extra functions which aren’t (yet) available
-                        in the game like an auto-updater so you always play the latest version. Our Launcher also has functionality to sync the 
-                        amount of played minutes to your OpenRCT.net profile, but even better, it can back up your saved game files to <a href="/cc">the Coaster Cloud</a>.
-                    </p>
+                    <h2>News</h2>
+                    <NewsItem title="OpenRCT2 0.1.2" date="21st January" author="IntelOrca">
+                        <p>
+                            Mauris at tortor tortor. Nunc quis consectetur enim. Ut dignissim turpis ut elit finibus, id ullamcorper libero finibus. Nulla vel pretium tortor. Ut maximus, ante id convallis vestibulum, ipsum quam auctor lacus, ac congue eros sapien eget dui. Vestibulum varius et dui ut pellentesque. Vivamus vitae dolor odio.
+                        </p>
+                        <p>
+                            Suspendisse vitae dui sapien. Sed venenatis gravida ante sit amet vulputate. Nam aliquet felis et tellus consequat vestibulum. Maecenas faucibus in neque non congue. Proin sed elit mauris. Nullam sed facilisis dui. In facilisis magna id odio efficitur dictum. Vivamus auctor ullamcorper dictum. Cras aliquam nisi et mauris fermentum commodo.
+                        </p>
+                        <a href="https://github.com/OpenRCT2/OpenRCT2/releases" className="card-link">Download</a>
+                        <a href="https://github.com/OpenRCT2/OpenRCT2/releases" className="card-link">Changelog</a>
+                        <a href="https://github.com/OpenRCT2/OpenRCT2/issues" className="card-link">Report bugs</a>
+                    </NewsItem>
+                    <NewsItem title="Sed maximus ante vitae" date="10th November 2017" author="Janisozaur">
+                        <p>
+                            Pellentesque a lorem gravida, vestibulum dui fermentum, lacinia nisl. Cras feugiat, nisi sit amet vestibulum pharetra, urna est varius leo, quis volutpat mi purus ac elit. Integer rhoncus elementum sem. Praesent vel diam blandit, mattis est facilisis, porttitor nibh. In porttitor nisi volutpat consectetur ornare. Nunc augue libero, pretium quis lectus vel, sodales tristique sapien. Sed non neque neque. Integer at sodales nisl. Nullam elementum dapibus massa, nec consectetur ipsum fringilla sed. Nam varius maximus augue, sed pretium mi pretium eu. Nullam mi ipsum, feugiat quis sem placerat, faucibus tincidunt nisi. Aenean non lorem massa. Proin ornare diam ex, ut tincidunt nulla gravida ac.
+                        </p>
+                        <a href="/" className="card-link">Venenatis</a>
+                        <a href="/" className="card-link">Blandit Feugiat Tortor</a>
+                    </NewsItem>
                 </div>
                 <div className="col">
                     <a className="no-link-decor" href="https://openrct2.org">
