@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { ExternalLink } from './ExternalLink';
 import sponser_do from '../img/digitalocean.png';
 
 export class Footer extends Component {
@@ -18,7 +19,7 @@ export class Footer extends Component {
         <ExternalButton to="https://twitter.com/OpenRCT2" className="fa fa-twitter-square" />
         <ExternalButton to="https://github.com/OpenRCT2/OpenRCT2" className="fa fa-github-square" />
         &copy; 2018 OpenRCT2 Team | <Link to="/privacy">Privacy Policy</Link> | <Link to="/contact">Contact</Link>
-        <div className="sponsor">openrct2.io hosting kindly sponsored by <img src={sponser_do} alt="DigitalOcean" /></div>
+        <div className="sponsor">openrct2.io hosting kindly sponsored by <ExternalLink href="https://digitalocean.com"><img src={sponser_do} alt="DigitalOcean" /></ExternalLink></div>
       </footer>
     );
   }
