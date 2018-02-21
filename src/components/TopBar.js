@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { isSignedIn } from '../reducers/profile';
 import logo from '../img/logo.png';
@@ -46,7 +47,7 @@ export class TopBar extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               {navButtons.map((btn, index) => {
-                let isActive = (location.pathname === btn.link);
+                let isActive = (this.props.location.pathname === btn.link);
                 return (
                   <li key={index} className={"nav-item " + (isActive ? "active" : "")}>
                     <Link className="nav-link" to={btn.link}>{btn.text}</Link>

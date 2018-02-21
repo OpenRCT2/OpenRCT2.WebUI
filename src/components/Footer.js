@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import sponser_do from '../img/digitalocean.png';
 
 export class Footer extends Component {

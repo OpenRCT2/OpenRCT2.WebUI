@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Redirect, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { PageBanner } from '../components/PageBanner';
@@ -12,12 +13,6 @@ export class SignInPage extends Component {
     this.state = {showAlert: false};
   }
 
-  componentWillMount() {
-    if (isSignedIn(this.props.profile)) {
-      this.context.router.push("/");
-    }
-  }
-
   signInClick = (e) => {
     e.preventDefault();
 
@@ -26,9 +21,6 @@ export class SignInPage extends Component {
     let password = this.refs.inputPassword.value;
     if (username && password) {
       signIn(username, password)
-        .then(() => {
-          this.context.router.push("/")
-        })
         .catch(() => {
           this.setState(prevState => ({
             showAlert: true
@@ -38,6 +30,10 @@ export class SignInPage extends Component {
   }
 
   render() {
+    if (isSignedIn(this.props.profile)) {
+      return (<Redirect to="/" />);
+    }
+
     function Alert(props) {
       if (!props.visible) return null;
       return (
@@ -46,6 +42,7 @@ export class SignInPage extends Component {
         </div>
       )
     }
+
     return (
       <div>
         <PageBanner image="signin">Sign in</PageBanner>

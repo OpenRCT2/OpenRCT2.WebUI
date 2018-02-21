@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware } from 'redux';
-import createLogger from 'redux-logger';
+import { applyMiddleware, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import orctApp from './reducers';
+import reducers from './reducers';
 
 const configureStore = () => {
   const middleware = [thunk];
@@ -10,7 +10,7 @@ const configureStore = () => {
   }
 
   return createStore(
-    orctApp,
+    reducers,
     applyMiddleware(...middleware)
   );
 };
