@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { Alert } from '../components/Alert';
 import { PageBanner } from '../components/PageBanner';
 import { isSignedIn } from '../reducers/profile';
 
@@ -41,21 +42,15 @@ export class SignInPage extends Component {
       return (<Redirect to="/" />);
     }
 
-    function Alert(props) {
-      if (!props.visible) return null;
-      return (
-        <div className="alert alert-danger mx-auto" role="alert" style={{maxWidth: 400}}>
-          Your username or password was incorrect.
-        </div>
-      )
-    }
-
+    const maxWidth = 400;
     return (
       <div>
         <PageBanner image="signin">Sign in</PageBanner>
         <div className="container container-main">
-          <Alert visible={this.state.showAlert} />
-          <div className="card mx-auto" style={{maxWidth: 400}}>
+          {this.state.showAlert &&
+            <Alert type="danger" maxWidth={maxWidth}>Your username or password was incorrect.</Alert>
+          }
+          <div className="card mx-auto" style={{maxWidth}}>
             <div className="card-body">
               <form>
                 <div className="form-group">
