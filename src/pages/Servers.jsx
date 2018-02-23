@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import * as actions from '../actions';
 import { getServers, getErrorMessage, getIsFetching } from '../reducers';
 import { PageBanner } from '../components/PageBanner';
@@ -32,14 +31,26 @@ class ServerItem extends Component {
   }
 }
 
+const propTypes = {
+  errorMessage: PropTypes.string,
+  servers: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  fetchServers: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+    isFetching: getIsFetching(state),
+    errorMessage: getErrorMessage(state),
+    servers: getServers(state),
+});
+
 export class ServersPage extends Component {
   componentDidMount() {
     this.fetchData();
   }
 
   fetchData() {
-    const { fetchServers } = this.props;
-    fetchServers();
+    this.props.fetchServers();
   }
 
   render() {
@@ -92,22 +103,5 @@ export class ServersPage extends Component {
   }
 }
 
-ServersPage.propTypes = {
-  errorMessage: PropTypes.string,
-  servers: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  fetchServers: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state, { params }) => {
-  return {
-    isFetching: getIsFetching(state),
-    errorMessage: getErrorMessage(state),
-    servers: getServers(state),
-  };
-};
-
-ServersPage = withRouter(connect(
-  mapStateToProps,
-  actions
-)(ServersPage));
+ServersPage.propTypes = propTypes;
+ServersPage = connect(mapStateToProps, actions)(ServersPage);

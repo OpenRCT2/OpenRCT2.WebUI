@@ -1,26 +1,33 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { PageBanner } from '../components/PageBanner';
 import { isSignedIn } from '../reducers/profile';
 
+const propTypes = {
+  signIn: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
 export class SignInPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {showAlert: false};
+    this.state = { showAlert: false };
   }
 
   signInClick = (e) => {
     e.preventDefault();
 
-    const { signIn } = this.props;
     let username = this.refs.inputEmail.value;
     let password = this.refs.inputPassword.value;
     if (username && password) {
-      signIn(username, password)
+      this.props.signIn(username, password)
         .catch(() => {
           this.setState(prevState => ({
             showAlert: true
@@ -69,19 +76,5 @@ export class SignInPage extends Component {
   }
 }
 
-SignInPage.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
-
-SignInPage.propTypes = {
-  signIn: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state, { params }) => {
-  return { profile: state.profile };
-};
-
-SignInPage = withRouter(connect(
-  mapStateToProps,
-  actions
-)(SignInPage));
+SignInPage.propTypes = propTypes;
+SignInPage = connect(mapStateToProps, actions)(SignInPage);

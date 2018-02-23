@@ -1,15 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { isSignedIn } from '../reducers/profile';
 
+const propTypes = {
+  signOut: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
 export class SignOutPage extends Component {
   render() {
     if (isSignedIn(this.props.profile)) {
-      const { signOut } = this.props;
-      signOut()
+      this.props.signOut()
       return (<div />);
     } else {
       return (<Redirect to="/" />);
@@ -17,19 +24,5 @@ export class SignOutPage extends Component {
   }
 }
 
-SignOutPage.contextTypes = {
-  router: PropTypes.object.isRequired,
-};
-
-SignOutPage.propTypes = {
-  signOut: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state, { params }) => {
-  return { profile: state.profile };
-};
-
-SignOutPage = withRouter(connect(
-  mapStateToProps,
-  actions
-)(SignOutPage));
+SignOutPage.propTypes = propTypes;
+SignOutPage = connect(mapStateToProps, actions)(SignOutPage);

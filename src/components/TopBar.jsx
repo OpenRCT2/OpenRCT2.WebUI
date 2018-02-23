@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { isSignedIn } from '../reducers/profile';
 import logo from '../img/logo.png';
 
@@ -14,9 +15,17 @@ let navButtons = [
      {text: "Forums", link: "/forums"},
 ]
 
+const propTypes = {
+  profile: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
 export class TopBar extends Component {
   render() {
-    let profile = this.props.profile;
+    const { profile } = this.props;
 
     let renderProfile = () => {
       if (isSignedIn(profile)) {
@@ -64,10 +73,5 @@ export class TopBar extends Component {
   }
 }
 
-const mapStateToProps = (state, { params }) => {
-  return { profile: state.profile };
-};
-
-TopBar = withRouter(connect(
-  mapStateToProps
-)(TopBar));
+TopBar.propTypes = propTypes;
+TopBar = withRouter(connect(mapStateToProps)(TopBar));

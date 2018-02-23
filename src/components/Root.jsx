@@ -12,11 +12,15 @@ import { SignOutPage } from '../pages/SignOut';
 import { TopBar } from './TopBar';
 import { Footer } from './Footer';
 
+const propTypes = {
+  store: PropTypes.object.isRequired,
+};
+
 const Root = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
-      <div>
-        <TopBar />
+      <React.Fragment>
+        <TopBar profile={store.getState().profile} />
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route path="/about" component={AboutPage}/>
@@ -27,13 +31,11 @@ const Root = ({ store }) => (
           <Route component={PageNotFoundPage}/>
         </Switch>
         <Footer />
-      </div>
+      </React.Fragment>
     </BrowserRouter>
   </Provider>
 );
 
-Root.propTypes = {
-  store: PropTypes.object.isRequired,
-};
+Root.propTypes = propTypes;
 
 export default Root;
