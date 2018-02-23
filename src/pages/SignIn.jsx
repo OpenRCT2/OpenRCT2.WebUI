@@ -19,20 +19,32 @@ export class SignInPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { showAlert: false };
+    this.signInClick = this.signInClick.bind(this);
+    this.usernameOnChange = this.usernameOnChange.bind(this);
+    this.passwordOnChange = this.passwordOnChange.bind(this);
+    this.state = {
+      username: '',
+      password: '',
+      showAlert: false
+    };
   }
 
-  signInClick = (e) => {
+  usernameOnChange(e) {
+    this.setState({ username: e.target.value })
+  }
+
+  passwordOnChange(e) {
+    this.setState({ password: e.target.value })
+  }
+
+  signInClick(e) {
     e.preventDefault();
 
-    let username = this.refs.inputEmail.value;
-    let password = this.refs.inputPassword.value;
+    const { username, password } = this.state;
     if (username && password) {
       this.props.signIn(username, password)
         .catch(() => {
-          this.setState(prevState => ({
-            showAlert: true
-          }));
+          this.setState({ showAlert: true });
         });
     }
   }
@@ -43,6 +55,7 @@ export class SignInPage extends Component {
     }
 
     const maxWidth = 400;
+    const { username, password } = this.state;
     return (
       <div>
         <PageBanner image="signin">Sign in</PageBanner>
@@ -55,11 +68,11 @@ export class SignInPage extends Component {
               <form>
                 <div className="form-group">
                   <label htmlFor="signin-email">Email address</label>
-                  <input type="email" className="form-control" id="signin-email" ref="inputEmail" />
+                  <input type="email" className="form-control" value={username} onChange={this.usernameOnChange} />
                 </div>
                 <div className="form-group">
                   <label htmlFor="signin-password">Password</label>
-                  <input type="password" className="form-control" id="signin-password" ref="inputPassword" />
+                  <input type="password" className="form-control" value={password} onChange={this.passwordOnChange} />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={this.signInClick}>Submit</button>
               </form>
