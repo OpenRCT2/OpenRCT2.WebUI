@@ -4,12 +4,12 @@ import { PageBanner } from '../components/PageBanner';
 export class PageNotFoundPage extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <PageBanner image="about"></PageBanner>
         <div className="container container-main">
           <p>This page does not exist.</p>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -57,7 +57,7 @@ export class SignInPage extends Component {
     const maxWidth = 400;
     const { username, password } = this.state;
     return (
-      <div>
+      <React.Fragment>
         <PageBanner image="signin">Sign in</PageBanner>
         <div className="container container-main">
           {this.state.showAlert &&
@@ -79,7 +79,7 @@ export class SignInPage extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

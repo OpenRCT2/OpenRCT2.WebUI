@@ -19,7 +19,7 @@ export class NewsItem extends Component {
 export class HomePage extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div id="home-banner" className="container page-banner page-banner-home">
             <div className="promo">
                 <img src={logo} alt="OpenRCT2" />
@@ -58,7 +58,7 @@ export class HomePage extends Component {
                 </div>
             </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

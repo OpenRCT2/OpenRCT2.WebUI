@@ -6,7 +6,7 @@ import thumb_case from '../img/thumb_case.jpg';
 export class AboutPage extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <PageBanner image="about">About</PageBanner>
         <div className="container container-main">
           <div className="media">
@@ -35,7 +35,7 @@ export class AboutPage extends Component {
             </figure>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

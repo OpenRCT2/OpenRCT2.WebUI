@@ -4,12 +4,12 @@ import { PageBanner } from '../components/PageBanner';
 export class CoasterCloudPage extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <PageBanner image="coastercloud">CoasterCloud</PageBanner>
         <div className="container container-main">
           <p>Coming soon...</p>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

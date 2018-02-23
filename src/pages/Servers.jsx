@@ -91,14 +91,14 @@ export class ServersPage extends Component {
     }
 
     return (
-      <div>
+      <React.Fragment>
         <PageBanner image="servers">Servers</PageBanner>
         <div className="container container-main">
           <div className="Servers">
             <ServerList />
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }
