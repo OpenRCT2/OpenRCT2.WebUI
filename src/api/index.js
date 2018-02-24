@@ -1,6 +1,11 @@
 const API_URL = "https://api.openrct2.io";
 const API_URL_SERVERS = `${API_URL}/servers`;
 
+const randomDelay = func => {
+    const delay = 250 + Math.floor(Math.random() * 1000);
+    setTimeout(func, delay);
+};
+
 export const fetchServers = () =>
     fetch(API_URL_SERVERS)
         .then((response) => response.json())
@@ -12,19 +17,31 @@ export const fetchServers = () =>
 export const signIn = (username, password) =>
     // TODO replace with real API end point
     new Promise((resolve, reject) => {
-        setTimeout(() => {
+        randomDelay(() => {
             if (username.toLowerCase() === 'intelorca' && password === 'donkey') {
                 resolve({id: 1, name: 'IntelOrca'});
             } else {
                 reject({});
             }
-        }, 250);
+        });
     });
 
 export const signOut = () =>
     // TODO replace with real API end point
     new Promise((resolve, reject) => {
-        setTimeout(() => {
+        randomDelay(() => {
             resolve({});
-        }, 250);
+        });
+    });
+
+export const signUp = signUpDetails =>
+    // TODO replace with real API end point
+    new Promise((resolve, reject) => {
+        randomDelay(() => {
+            if (signUpDetails.username === 'chris') {
+                reject({ message: 'Username already taken' });
+            } else {
+                resolve();
+            }
+        });
     });

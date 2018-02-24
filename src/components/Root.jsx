@@ -9,6 +9,7 @@ import { ServersPage } from '../pages/Servers';
 import { PageNotFoundPage } from '../pages/PageNotFound';
 import { SignInPage } from '../pages/SignIn';
 import { SignOutPage } from '../pages/SignOut';
+import { SignUpPage } from '../pages/SignUp';
 import { TopBar } from './TopBar';
 import { Footer } from './Footer';
 
@@ -28,6 +29,7 @@ const Root = ({ store }) => (
           <Route path="/servers" component={ServersPage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/signout" component={SignOutPage}/>
+          <Route path="/signup" component={SignUpPage}/>
           <Route component={PageNotFoundPage}/>
         </Switch>
         <Footer />

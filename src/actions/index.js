@@ -75,3 +75,23 @@ export const signOut = () => (dispatch, getState) => {
   }
   return Promise.resolve();
 }
+
+export const signUp = signUpDetails => (dispatch, getState) => {
+  let profile = getState().profile;
+  if (profile.state === ProfileState.DEFAULT) {
+    dispatch({
+      type: 'SIGN_UP_REQUEST',
+    });
+    return api.signUp(signUpDetails)
+      .then(response => {
+        dispatch({
+          type: 'SIGN_UP_SUCCESS',
+          response: response,
+        });
+      })
+      .catch(error => {
+        throw error.message || 'Something went wrong.';
+      });
+  }
+  return Promise.resolve();
+}
