@@ -38,9 +38,13 @@ export class TopBar extends Component {
         )
       } else {
         return (
-          <Link className="text-light no-link-decor" to="/signin">
-            <i className="fa fa-sign-in" /> Sign in
-          </Link>
+          <div className="text-light">
+            <Link className="no-link-decor" to="/signin">
+              <i className="fa fa-sign-in" /> Sign in
+            </Link>
+            &nbsp;|&nbsp;
+            <Link className="no-link-decor" to="/signup">Sign up</Link>
+          </div>
         )
       }
     }

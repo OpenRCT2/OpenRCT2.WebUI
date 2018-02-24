@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Alert } from '../components/Alert';
@@ -20,6 +21,7 @@ export class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.signInClick = this.signInClick.bind(this);
+    this.resetPasswordClick = this.resetPasswordClick.bind(this);
     this.usernameOnChange = this.usernameOnChange.bind(this);
     this.passwordOnChange = this.passwordOnChange.bind(this);
     this.state = {
@@ -49,6 +51,10 @@ export class SignInPage extends Component {
     }
   }
 
+  resetPasswordClick(e) {
+    e.preventDefault();
+  }
+
   render() {
     if (isSignedIn(this.props.profile)) {
       return (<Redirect to="/" />);
@@ -63,7 +69,7 @@ export class SignInPage extends Component {
           {this.state.showAlert &&
             <Alert type="danger" maxWidth={maxWidth}>Your username or password was incorrect.</Alert>
           }
-          <div className="card mx-auto" style={{maxWidth}}>
+          <div className="card mx-auto mb-1" style={{maxWidth}}>
             <div className="card-body">
               <form>
                 <div className="form-group">
@@ -74,8 +80,14 @@ export class SignInPage extends Component {
                   <label htmlFor="signin-password">Password</label>
                   <input type="password" className="form-control" value={password} onChange={this.passwordOnChange} />
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={this.signInClick}>Submit</button>
+                <button type="submit" className="btn btn-primary" onClick={this.signInClick}>Sign in</button>&nbsp;
+                <button className="btn btn-secondary" onClick={this.resetPasswordClick}>Reset password</button>
               </form>
+            </div>
+          </div>
+          <div className="card mx-auto" style={{maxWidth}}>
+            <div className="card-body">
+              <Link to="/signup">Create an account</Link>
             </div>
           </div>
         </div>
