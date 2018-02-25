@@ -1,5 +1,6 @@
-const API_URL = "https://api.openrct2.io";
-const API_URL_SERVERS = `${API_URL}/servers`;
+import { SiteConfig } from "../config";
+
+const API_URL_SERVERS = `${SiteConfig.apiUrl}/servers`;
 
 const randomDelay = func => {
     const delay = 250 + Math.floor(Math.random() * 1000);

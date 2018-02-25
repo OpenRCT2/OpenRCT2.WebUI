@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Alert } from '../components/Alert';
 import { PageBanner } from '../components/PageBanner';
+import { SiteConfig } from '../config';
 import { isSignedIn } from '../reducers/profile';
 
 const propTypes = {
@@ -35,11 +37,13 @@ export class SignUpPage extends Component {
     this.emailOnChange = this.emailOnChange.bind(this);
     this.passwordOnChange = this.passwordOnChange.bind(this);
     this.passwordConfirmOnChange = this.passwordConfirmOnChange.bind(this);
+    this.captchaOnChange = this.captchaOnChange.bind(this);
     this.state = {
       username: '',
       email: '',
       password: '',
       passwordConfirm: '',
+      captcha: null,
       errorText: '',
       isBusy: false,
     };
@@ -61,6 +65,10 @@ export class SignUpPage extends Component {
     this.setState({ passwordConfirm: e.target.value })
   }
 
+  captchaOnChange(value) {
+    this.setState({ captcha: value });
+  }
+
   signUpClick(e) {
     e.preventDefault();
 
@@ -72,9 +80,9 @@ export class SignUpPage extends Component {
     }
 
     const { signIn, signUp } = this.props;
-    const { username, email, password } = this.state;
+    const { username, email, password, captcha } = this.state;
     this.setState({ isBusy: true });
-    signUp({ username, email, password })
+    signUp({ username, email, password, captcha })
       .then(() => {
         signIn(username, password)
           .catch(() => {
@@ -88,7 +96,7 @@ export class SignUpPage extends Component {
   }
 
   validateClient() {
-    const { username, email, password, passwordConfirm } = this.state;
+    const { username, email, password, passwordConfirm, captcha } = this.state;
     if (!/^[a-zA-Z0-9-_]{3,}$/.test(username)) {
       return 'Username must be at least 3 characters and can only contain alphanumeric characters, hyphen (-) or underscore (_).';
     }
@@ -99,7 +107,10 @@ export class SignUpPage extends Component {
       return 'Password must be at least 6 characters.';
     }
     if (passwordConfirm !== password) {
-      return 'Passwords do not match.'
+      return 'Passwords do not match.';
+    }
+    if (!captcha) {
+      return 'reCAPTCHA not checked';
     }
     return true;
   }
@@ -125,6 +136,7 @@ export class SignUpPage extends Component {
                 <TextBox id="signup-email" type="email" value={email} onChange={this.emailOnChange}>Email address</TextBox>
                 <TextBox id="signup-password" type="password" value={password} onChange={this.passwordOnChange}>Password</TextBox>
                 <TextBox id="signup-password-confirm" type="password" value={passwordConfirm} onChange={this.passwordConfirmOnChange}>Confirm password</TextBox>
+                <ReCAPTCHA className="mb-3" sitekey={SiteConfig.reCaptchaKey} onChange={this.captchaOnChange} />
                 <button type="submit" className="btn btn-primary" disabled={isBusy} onClick={this.signUpClick}>Create account</button>&nbsp;
               </form>
             </div>

@@ -4,6 +4,10 @@ export const ProfileState = {
   SIGNED_IN: 'SIGNED_IN'
 }
 
+const defaultState = {
+  state: ProfileState.DEFAULT
+};
+
 const initialState = (() => {
   let profile = localStorage['profile'];
   if (profile) {
@@ -11,9 +15,7 @@ const initialState = (() => {
       return JSON.parse(profile);
     } catch (e) { }
   }
-  return {
-    state: ProfileState.DEFAULT
-  };
+  return defaultState;
 })();
 
 export const profile = (state = initialState, action) => {
@@ -27,7 +29,7 @@ export const profile = (state = initialState, action) => {
       return newState;
     case 'SIGN_OUT_SUCCESS':
       localStorage.removeItem('profile');
-      return initialState;
+      return defaultState;
     default:
       return state;
   }
