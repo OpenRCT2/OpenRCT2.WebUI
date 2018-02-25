@@ -3,6 +3,31 @@ import * as api from '../api';
 import { getIsFetching } from '../reducers';
 import { ProfileState } from '../reducers/profile';
 
+export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
+  if (getState().news.isFetching) {
+    return Promise.resolve();
+  }
+
+  dispatch({
+    type: 'FETCH_NEWS_REQUEST',
+  });
+
+  return api.fetchNewsItems(skip, take).then(
+    response => {
+      dispatch({
+        type: 'FETCH_NEWS_SUCCESS',
+        response: response,
+      });
+    },
+    error => {
+      dispatch({
+        type: 'FETCH_NEWS_FAILURE',
+        message: error.message || 'Something went wrong.',
+      });
+    }
+  );
+};
+
 export const fetchServers = () => (dispatch, getState) => {
   if (getIsFetching(getState())) {
     return Promise.resolve();
