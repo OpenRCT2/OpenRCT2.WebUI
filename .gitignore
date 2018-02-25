@@ -7,6 +7,9 @@ node_modules
 # production
 build
 
+# local
+*.local
+
 # misc
 .DS_Store
 npm-debug.log.*

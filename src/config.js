@@ -5,7 +5,7 @@ export const SiteConfig = {
 };
 
 // Allow override of API url from environment
-const env = process.env['OPENRCT2_API_URL'];
+const env = process.env['REACT_APP_OPENRCT2_API_URL'];
 if (env) {
   SiteConfig.apiUrl = env;
 }
