@@ -1,5 +1,6 @@
 import { SiteConfig } from "../config";
 
+const API_URL_CREATE_USER = `${SiteConfig.apiUrl}/user/create`;
 const API_URL_SERVERS = `${SiteConfig.apiUrl}/servers`;
 
 const randomDelay = func => {
@@ -36,15 +37,18 @@ export const signOut = () =>
     });
 
 export const signUp = signUpDetails =>
-    // TODO replace with real API end point
-    new Promise((resolve, reject) => {
-        randomDelay(() => {
-            if (signUpDetails.username === 'chris') {
-                reject({ message: 'Username already taken' });
-            } else {
-                resolve();
-            }
-        });
+    fetch(API_URL_CREATE_USER, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(signUpDetails),
+    })
+    .then(response => response.json())
+    .then(json => {
+        if (json.result !== 'ok') {
+            throw new Error(json.message);
+        }
     });
 
 export const fetchNewsItems = (skip, take) =>

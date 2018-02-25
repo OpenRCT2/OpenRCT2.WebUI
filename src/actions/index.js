@@ -104,9 +104,6 @@ export const signOut = () => (dispatch, getState) => {
 export const signUp = signUpDetails => (dispatch, getState) => {
   let profile = getState().profile;
   if (profile.state === ProfileState.DEFAULT) {
-    dispatch({
-      type: 'SIGN_UP_REQUEST',
-    });
     return api.signUp(signUpDetails)
       .then(response => {
         dispatch({
