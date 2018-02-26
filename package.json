@@ -17,7 +17,8 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "sha.js": "^2.4.10"
   },
   "scripts": {
     "start": "react-scripts start",

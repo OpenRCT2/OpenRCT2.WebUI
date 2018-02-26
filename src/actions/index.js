@@ -1,7 +1,16 @@
 // eslint-disable-next-line
+import * as shajs from 'sha.js';
 import * as api from '../api';
 import { ProfileState } from '../constants/profile';
 import { Servers } from '../selectors';
+import { SiteConfig } from '../config';
+
+const hashPassword = (password) => {
+  let salt = SiteConfig.passwordClientSalt;
+  let hash = shajs('sha512');
+  hash.update(salt + password);
+  return hash.digest('hex');
+}
 
 export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
   if (getState().news.isFetching) {
@@ -59,7 +68,7 @@ export const signIn = (username, password) => (dispatch, getState) => {
     dispatch({
       type: 'SIGN_IN_REQUEST',
     });
-    return api.signIn(username, password)
+    return api.signIn(username, hashPassword(password))
       .then(response => {
         dispatch({
           type: 'SIGN_IN_SUCCESS',
@@ -104,6 +113,11 @@ export const signOut = () => (dispatch, getState) => {
 export const signUp = signUpDetails => (dispatch, getState) => {
   let profile = getState().profile;
   if (profile.state === ProfileState.DEFAULT) {
+    // Hash password before sending it across the internet
+    signUpDetails = {
+      ...signUpDetails,
+      password: hashPassword(signUpDetails.password)
+    };
     return api.signUp(signUpDetails)
       .then(response => {
         dispatch({
