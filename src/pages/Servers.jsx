@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { getServers, getErrorMessage, getIsFetching } from '../reducers';
 import { PageBanner } from '../components/PageBanner';
+import { Servers } from '../selectors';
 import './Servers.css';
 
 const FetchError = ({ message, onRetry }) => (
@@ -33,16 +33,18 @@ class ServerItem extends Component {
 
 const propTypes = {
   errorMessage: PropTypes.string,
-  servers: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   fetchServers: PropTypes.func.isRequired,
+  servers: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = state => ({
-    isFetching: getIsFetching(state),
-    errorMessage: getErrorMessage(state),
-    servers: getServers(state),
-});
+const mapStateToProps = state => {
+  return {
+    errorMessage: Servers.getErrorMessage(state.servers),
+    isFetching: Servers.getIsFetching(state.servers),
+    servers: Servers.getServers(state.servers),
+  };
+};
 
 export class ServersPage extends Component {
   componentDidMount() {
@@ -54,9 +56,8 @@ export class ServersPage extends Component {
   }
 
   render() {
-    let serverProps = this.props;
-    function ServerList() {
-      const { isFetching, errorMessage, servers } = serverProps;
+    const ServerList = () => {
+      const { isFetching, errorMessage, servers } = this.props;
       if (isFetching && servers.length === 0) {
         return (
           <p className="Servers-intro">Loading...</p>

@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import * as api from '../api';
 import { ProfileState } from '../constants/profile';
-import { getIsFetching } from '../reducers';
+import { Servers } from '../selectors';
 
 export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
   if (getState().news.isFetching) {
@@ -29,7 +29,7 @@ export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
 };
 
 export const fetchServers = () => (dispatch, getState) => {
-  if (getIsFetching(getState())) {
+  if (Servers.getIsFetching(getState().servers)) {
     return Promise.resolve();
   }
 

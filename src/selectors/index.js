@@ -1,5 +1,5 @@
 import * as News from './news'
 import * as Profile from './profile'
+import * as Servers from './servers'
 
-export { News }
-export { Profile }
+export { News, Profile, Servers }
