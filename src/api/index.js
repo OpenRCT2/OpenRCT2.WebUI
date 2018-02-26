@@ -46,7 +46,7 @@ export const signUp = signUpDetails =>
     })
     .then(response => response.json())
     .then(json => {
-        if (json.result !== 'ok') {
+        if (json.status !== 'ok') {
             throw new Error(json.message);
         }
     });

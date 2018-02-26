@@ -92,6 +92,7 @@ export class SignUpPage extends Component {
       .catch(errorText => {
         this.setState({ errorText });
         this.setState({ isBusy: false });
+        this.recaptcha.reset();
       });
   }
 
@@ -136,7 +137,7 @@ export class SignUpPage extends Component {
                 <TextBox id="signup-email" type="email" value={email} onChange={this.emailOnChange}>Email address</TextBox>
                 <TextBox id="signup-password" type="password" value={password} onChange={this.passwordOnChange}>Password</TextBox>
                 <TextBox id="signup-password-confirm" type="password" value={passwordConfirm} onChange={this.passwordConfirmOnChange}>Confirm password</TextBox>
-                <ReCAPTCHA className="mb-3" sitekey={SiteConfig.reCaptchaKey} onChange={this.captchaOnChange} />
+                <ReCAPTCHA className="mb-3" sitekey={SiteConfig.reCaptchaKey} onChange={this.captchaOnChange} ref={e => this.recaptcha = e} />
                 <button type="submit" className="btn btn-primary" disabled={isBusy} onClick={this.signUpClick}>Create account</button>&nbsp;
               </form>
             </div>
