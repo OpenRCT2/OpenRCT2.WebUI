@@ -28,9 +28,9 @@ const propTypes = {
 };
 
 const mapStateToProps = state => ({
-  hasFetchedNews: News.isFetching(state.news),
-  isFetchingNews: News.hasFetched(state.news),
-  newsItems: News.getItems(state.news),
+  hasFetchedNews: News.isFetching(state),
+  isFetchingNews: News.hasFetched(state),
+  newsItems: News.getItems(state),
 });
 
 export class HomePage extends Component {

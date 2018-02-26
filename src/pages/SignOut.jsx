@@ -6,18 +6,19 @@ import * as actions from '../actions';
 import { Profile } from '../selectors';
 
 const propTypes = {
+  isSignedIn: PropTypes.bool.isRequired,
   signOut: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  profile: state.profile
+  isSignedIn: Profile.isSignedIn(state)
 });
 
 export class SignOutPage extends Component {
   render() {
-    if (Profile.isSignedIn(this.props.profile)) {
-      this.props.signOut()
-      return (<div />);
+    const { isSignedIn, signOut } = this.props;
+    if (isSignedIn) {
+      signOut();
+      return (<div>Signing you out...</div>);
     } else {
       return (<Redirect to="/" />);
     }

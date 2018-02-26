@@ -1,3 +1,3 @@
-export const getServers = state => state.servers;
-export const getIsFetching = state => state.isFetching;
-export const getErrorMessage = state => state.errorMessage;
+export const getServers = state => state.servers.servers;
+export const getIsFetching = state => state.servers.isFetching;
+export const getErrorMessage = state => state.servers.errorMessage;

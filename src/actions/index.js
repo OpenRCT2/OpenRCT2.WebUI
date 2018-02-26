@@ -1,9 +1,8 @@
 // eslint-disable-next-line
 import * as shajs from 'sha.js';
 import * as api from '../api';
-import { ProfileState } from '../constants/profile';
-import { Servers } from '../selectors';
 import { SiteConfig } from '../config';
+import { Servers, Profile } from '../selectors';
 
 const hashPassword = (password) => {
   let salt = SiteConfig.passwordClientSalt;
@@ -63,8 +62,8 @@ export const fetchServers = () => (dispatch, getState) => {
 };
 
 export const signIn = (username, password) => (dispatch, getState) => {
-  let profile = getState().profile;
-  if (profile.state === ProfileState.DEFAULT) {
+  const state = getState();
+  if (!Profile.isSignedIn(state)) {
     dispatch({
       type: 'SIGN_IN_REQUEST',
     });
@@ -87,8 +86,8 @@ export const signIn = (username, password) => (dispatch, getState) => {
 }
 
 export const signOut = () => (dispatch, getState) => {
-  let profile = getState().profile;
-  if (profile.state === ProfileState.SIGNED_IN) {
+  const state = getState();
+  if (Profile.isSignedIn(state)) {
     dispatch({
       type: 'SIGN_OUT_REQUEST',
     });
@@ -111,8 +110,8 @@ export const signOut = () => (dispatch, getState) => {
 }
 
 export const signUp = signUpDetails => (dispatch, getState) => {
-  let profile = getState().profile;
-  if (profile.state === ProfileState.DEFAULT) {
+  const state = getState();
+  if (!Profile.isSignedIn(state)) {
     // Hash password before sending it across the internet
     signUpDetails = {
       ...signUpDetails,

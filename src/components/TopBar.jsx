@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Profile } from '../selectors';
 import logo from '../img/logo.png';
 
-let navButtons = [
+const navButtons = [
      {text: "About", link: "/about"},
      {text: "Download", link: "/download"},
      {text: "Docs", link: "/docs"},
@@ -16,24 +16,26 @@ let navButtons = [
 ]
 
 const propTypes = {
-  profile: PropTypes.object.isRequired
+  isSignedIn: PropTypes.bool.isRequired,
+  userName: PropTypes.string,
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  isSignedIn: Profile.isSignedIn(state),
+  userName: Profile.getName(state),
 });
 
 export class TopBar extends Component {
   render() {
-    const { profile } = this.props;
+    const { userName, isSignedIn } = this.props;
 
     let renderProfile = () => {
-      if (Profile.isSignedIn(profile)) {
+      if (isSignedIn) {
         return (
           <div className="text-light">
             <Link className="no-link-decor" to="/signout">
               <i className="fa fa-sign-out" />
-            </Link> {profile.name}
+            </Link> {userName}
           </div>
         )
       } else {
@@ -53,7 +55,7 @@ export class TopBar extends Component {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <img src={logo} width="30" height="30" alt="" /> {Profile.isSignedIn(profile) ? "" : "OpenRCT2"}
+            <img src={logo} width="30" height="30" alt="" /> {isSignedIn ? "" : "OpenRCT2"}
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span className="navbar-toggler-icon"></span>

@@ -1,3 +1,4 @@
 import { ProfileState } from '../constants/profile'
 
-export const isSignedIn = profile => profile.state === ProfileState.SIGNED_IN;
+export const getName = state => state.profile.name;
+export const isSignedIn = state => state.profile.state === ProfileState.SIGNED_IN;

@@ -40,9 +40,9 @@ const propTypes = {
 
 const mapStateToProps = state => {
   return {
-    errorMessage: Servers.getErrorMessage(state.servers),
-    isFetching: Servers.getIsFetching(state.servers),
-    servers: Servers.getServers(state.servers),
+    errorMessage: Servers.getErrorMessage(state),
+    isFetching: Servers.getIsFetching(state),
+    servers: Servers.getServers(state),
   };
 };
 

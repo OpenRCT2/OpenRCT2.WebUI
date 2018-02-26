@@ -1,3 +1,3 @@
-export const getItems = news => news.items;
-export const hasFetched = news => news.hasFetched;
-export const isFetching = news => news.isFetching;
+export const getItems = state => state.news.items;
+export const hasFetched = state => state.news.hasFetched;
+export const isFetching = state => state.news.isFetching;

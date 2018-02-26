@@ -9,11 +9,12 @@ import { PageBanner } from '../components/PageBanner';
 import { Profile } from '../selectors';
 
 const propTypes = {
+  isSignedIn: PropTypes.bool.isRequired,
   signIn: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  isSignedIn: Profile.isSignedIn(state)
 });
 
 export class SignInPage extends Component {
@@ -56,7 +57,7 @@ export class SignInPage extends Component {
   }
 
   render() {
-    if (Profile.isSignedIn(this.props.profile)) {
+    if (this.props.isSignedIn) {
       return (<Redirect to="/" />);
     }
 
