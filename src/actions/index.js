@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import * as api from '../api';
+import { ProfileState } from '../constants/profile';
 import { getIsFetching } from '../reducers';
-import { ProfileState } from '../reducers/profile';
 
 export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
   if (getState().news.isFetching) {

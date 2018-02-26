@@ -7,7 +7,7 @@ import * as actions from '../actions';
 import { Alert } from '../components/Alert';
 import { PageBanner } from '../components/PageBanner';
 import { SiteConfig } from '../config';
-import { isSignedIn } from '../reducers/profile';
+import { Profile } from '../selectors';
 
 const propTypes = {
   signUp: PropTypes.func.isRequired,
@@ -117,7 +117,7 @@ export class SignUpPage extends Component {
   }
 
   render() {
-    if (isSignedIn(this.props.profile)) {
+    if (Profile.isSignedIn(this.props.profile)) {
       return (<Redirect to="/" />);
     }
 

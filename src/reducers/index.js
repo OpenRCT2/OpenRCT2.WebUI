@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { profile } from './profile';
+import profile from './profile';
 import { news } from './news';
 import createServerList, * as fromServerList from './servers'; // eslint-disable-next-line
 import createObjectList, * as fromObjectList from './objects';

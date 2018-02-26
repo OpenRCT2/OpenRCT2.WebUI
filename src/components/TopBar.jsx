@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { isSignedIn } from '../reducers/profile';
+import { Profile } from '../selectors';
 import logo from '../img/logo.png';
 
 let navButtons = [
@@ -28,7 +28,7 @@ export class TopBar extends Component {
     const { profile } = this.props;
 
     let renderProfile = () => {
-      if (isSignedIn(profile)) {
+      if (Profile.isSignedIn(profile)) {
         return (
           <div className="text-light">
             <Link className="no-link-decor" to="/signout">
@@ -53,7 +53,7 @@ export class TopBar extends Component {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <img src={logo} width="30" height="30" alt="" /> {isSignedIn(profile) ? "" : "OpenRCT2"}
+            <img src={logo} width="30" height="30" alt="" /> {Profile.isSignedIn(profile) ? "" : "OpenRCT2"}
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span className="navbar-toggler-icon"></span>

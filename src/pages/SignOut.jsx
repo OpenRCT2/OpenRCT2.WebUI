@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { isSignedIn } from '../reducers/profile';
+import { Profile } from '../selectors';
 
 const propTypes = {
   signOut: PropTypes.func.isRequired,
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 export class SignOutPage extends Component {
   render() {
-    if (isSignedIn(this.props.profile)) {
+    if (Profile.isSignedIn(this.props.profile)) {
       this.props.signOut()
       return (<div />);
     } else {

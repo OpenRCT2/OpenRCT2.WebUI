@@ -1,8 +1,4 @@
-export const ProfileState = {
-  DEFAULT: 'DEFAULT',
-  SIGNING_IN: 'SIGNING_IN',
-  SIGNED_IN: 'SIGNED_IN'
-}
+import { ProfileState } from '../constants/profile'
 
 const defaultState = {
   state: ProfileState.DEFAULT
@@ -18,7 +14,7 @@ const initialState = (() => {
   return defaultState;
 })();
 
-export const profile = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SIGN_IN_SUCCESS':
       let newState = {
@@ -35,6 +31,4 @@ export const profile = (state = initialState, action) => {
   }
 }
 
-export const isSignedIn = (profile) => {
-  return profile.state === ProfileState.SIGNED_IN;
-}
+export default reducer;

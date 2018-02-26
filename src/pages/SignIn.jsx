@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Alert } from '../components/Alert';
 import { PageBanner } from '../components/PageBanner';
-import { isSignedIn } from '../reducers/profile';
+import { Profile } from '../selectors';
 
 const propTypes = {
   signIn: PropTypes.func.isRequired,
@@ -56,7 +56,7 @@ export class SignInPage extends Component {
   }
 
   render() {
-    if (isSignedIn(this.props.profile)) {
+    if (Profile.isSignedIn(this.props.profile)) {
       return (<Redirect to="/" />);
     }
 
