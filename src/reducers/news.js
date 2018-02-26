@@ -10,7 +10,7 @@ const initialState = (() => {
   };
 })();
 
-export const news = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_NEWS_REQUEST':
       return { isFetching: true, ...state };
@@ -24,3 +24,5 @@ export const news = (state = initialState, action) => {
       return state;
   }
 };
+
+export default reducer;

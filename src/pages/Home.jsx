@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { News } from '../selectors';
 import './Home.css';
 import logo from '../img/logo.png';
 
-export class NewsItem extends Component {
+class NewsItem extends Component {
   render() {
     return (
       <div className="card news-item">
@@ -20,27 +21,31 @@ export class NewsItem extends Component {
 }
 
 const propTypes = {
-  news: PropTypes.object.isRequired,
   fetchNewsItems: PropTypes.func.isRequired,
+  hasFetchedNews: PropTypes.bool.isRequired,
+  isFetchingNews: PropTypes.bool.isRequired,
+  newsItems: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  news: state.news,
+  hasFetchedNews: News.isFetching(state.news),
+  isFetchingNews: News.hasFetched(state.news),
+  newsItems: News.getItems(state.news),
 });
 
 export class HomePage extends Component {
   componentDidMount() {
-    const { news, fetchNewsItems } = this.props;
-    if (!news.hasFetched) {
+    const { fetchNewsItems, hasFetchedNews } = this.props;
+    if (!hasFetchedNews) {
       fetchNewsItems(0, 3);
     }
   }
 
   render() {
     const renderNewsList = () => {
-      const { items } = this.props.news;
-      if (items) {
-        return items.map((newsItem, index) => {
+      const { newsItems } = this.props;
+      if (newsItems) {
+        return newsItems.map((newsItem, index) => {
           return (
             <NewsItem key={index} title={newsItem.title} date={newsItem.date} author={newsItem.date}>
               <div dangerouslySetInnerHTML={{ __html: newsItem.content }} />
