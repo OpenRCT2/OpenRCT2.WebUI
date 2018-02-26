@@ -10,11 +10,12 @@ import { SiteConfig } from '../config';
 import { Profile } from '../selectors';
 
 const propTypes = {
+  isSignedIn: PropTypes.bool.isRequired,
   signUp: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  isSignedIn: Profile.isSignedIn(state)
 });
 
 export class TextBox extends Component {
@@ -117,7 +118,7 @@ export class SignUpPage extends Component {
   }
 
   render() {
-    if (Profile.isSignedIn(this.props.profile)) {
+    if (this.props.isSignedIn) {
       return (<Redirect to="/" />);
     }
 
