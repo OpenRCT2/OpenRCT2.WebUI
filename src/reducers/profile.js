@@ -1,7 +1,9 @@
 import { ProfileState } from '../constants/profile'
 
 const defaultState = {
-  state: ProfileState.DEFAULT
+  state: ProfileState.DEFAULT,
+  token: null,
+  name: null,
 };
 
 const initialState = (() => {
@@ -19,7 +21,8 @@ const reducer = (state = initialState, action) => {
     case 'SIGN_IN_SUCCESS':
       let newState = {
         state: ProfileState.SIGNED_IN,
-        ...action.response
+        token: action.token,
+        name: action.user.name,
       };
       localStorage['profile'] = JSON.stringify(newState);
       return newState;

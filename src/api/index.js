@@ -1,6 +1,7 @@
 import { SiteConfig } from "../config";
 
-const API_URL_CREATE_USER = `${SiteConfig.apiUrl}/user/create`;
+const API_URL_USER_CREATE = `${SiteConfig.apiUrl}/user/create`;
+const API_URL_USER_AUTH = `${SiteConfig.apiUrl}/user/auth`;
 const API_URL_SERVERS = `${SiteConfig.apiUrl}/servers`;
 
 const randomDelay = func => {
@@ -17,27 +18,45 @@ export const fetchServers = () =>
         })
 
 export const signIn = (username, password) =>
-    // TODO replace with real API end point
-    new Promise((resolve, reject) => {
-        randomDelay(() => {
-            if (username.toLowerCase() === 'intelorca' && password === 'donkey') {
-                resolve({id: 1, name: 'IntelOrca'});
-            } else {
-                reject({});
-            }
-        });
+    fetch(API_URL_USER_AUTH, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({ username, password }),
+    })
+    .then(response => response.json())
+    .then(json => {
+        if (json.status === 'ok') {
+            return {
+                token: json.token,
+                user: json.user
+            };
+        } else {
+            throw new Error(json.message);
+        }
     });
 
-export const signOut = () =>
-    // TODO replace with real API end point
-    new Promise((resolve, reject) => {
-        randomDelay(() => {
-            resolve({});
-        });
+export const signOut = token =>
+    fetch(API_URL_USER_AUTH, {
+        method: 'DELETE',
+        headers: {
+            'authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            if (response.status === 401) {
+                throw new Error("Unauthorised");
+            } else {
+                const { message } = response.json();
+                throw new Error(message);
+            }
+        }
     });
 
 export const signUp = signUpDetails =>
-    fetch(API_URL_CREATE_USER, {
+    fetch(API_URL_USER_CREATE, {
         method: 'POST',
         headers: {
             'content-type': 'application/json'

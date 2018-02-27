@@ -68,10 +68,10 @@ export const signIn = (username, password) => (dispatch, getState) => {
       type: 'SIGN_IN_REQUEST',
     });
     return api.signIn(username, hashPassword(password))
-      .then(response => {
+      .then(result => {
         dispatch({
+          ...result, 
           type: 'SIGN_IN_SUCCESS',
-          response: response,
         });
       })
       .catch(error => {
@@ -91,7 +91,7 @@ export const signOut = () => (dispatch, getState) => {
     dispatch({
       type: 'SIGN_OUT_REQUEST',
     });
-    return api.signOut()
+    return api.signOut(Profile.getToken(state))
       .then(response => {
         dispatch({
           type: 'SIGN_OUT_SUCCESS',

@@ -74,8 +74,8 @@ export class SignInPage extends Component {
             <div className="card-body">
               <form>
                 <div className="form-group">
-                  <label htmlFor="signin-email">Email address</label>
-                  <input type="email" className="form-control" value={username} onChange={this.usernameOnChange} />
+                  <label htmlFor="signin-username">Username</label>
+                  <input type="input" className="form-control" value={username} onChange={this.usernameOnChange} />
                 </div>
                 <div className="form-group">
                   <label htmlFor="signin-password">Password</label>
