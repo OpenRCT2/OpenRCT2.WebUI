@@ -47,8 +47,8 @@ export class HomePage extends Component {
       if (newsItems) {
         return newsItems.map((newsItem, index) => {
           return (
-            <NewsItem key={index} title={newsItem.title} date={newsItem.date} author={newsItem.date}>
-              <div dangerouslySetInnerHTML={{ __html: newsItem.content }} />
+            <NewsItem key={index} title={newsItem.title} date={newsItem.date} author={newsItem.author}>
+              <div dangerouslySetInnerHTML={{ __html: newsItem.html }} />
             </NewsItem>
           )
         })
