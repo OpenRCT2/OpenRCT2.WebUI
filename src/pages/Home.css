@@ -57,3 +57,12 @@
 .news-item:not(:last-child) {
     margin-bottom: 8px;
 }
+
+.news-item .edit-links {
+    float: right;
+    font-size: smaller;
+}
+
+.news-item .edit-links a {
+    cursor: pointer;
+}

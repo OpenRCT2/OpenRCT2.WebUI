@@ -22,7 +22,7 @@ export const signIn = (username, password) =>
     fetch(API_URL_USER_AUTH, {
         method: 'POST',
         headers: {
-            'content-type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ username, password }),
     })
@@ -42,7 +42,7 @@ export const signOut = token =>
     fetch(API_URL_USER_AUTH, {
         method: 'DELETE',
         headers: {
-            'authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`
         }
     })
     .then(response => {
@@ -60,7 +60,7 @@ export const signUp = signUpDetails =>
     fetch(API_URL_USER_CREATE, {
         method: 'POST',
         headers: {
-            'content-type': 'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(signUpDetails),
     })
@@ -79,5 +79,35 @@ export const fetchNewsItems = (skip, take) =>
             return json.result;
         } else {
             throw new Error(json.message);
+        }
+    });
+
+export const deleteNewsItem = (token, id) =>
+    fetch(API_URL_NEWS, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(response.json().message)
+        }
+    });
+
+export const editNewsItem = (token, id, title, html) =>
+    fetch(API_URL_NEWS, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, title, html }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(response.json().message)
         }
     });

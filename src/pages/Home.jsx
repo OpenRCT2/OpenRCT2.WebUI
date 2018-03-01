@@ -7,29 +7,111 @@ import './Home.css';
 import logo from '../img/logo.png';
 
 class NewsItem extends Component {
+  constructor(props) {
+    super(props);
+    this.onEditClick = this.onEditClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+    this.onTitleChange = this.onTitleChange.bind(this);
+    this.onHtmlChange = this.onHtmlChange.bind(this);
+    this.onSaveClick = this.onSaveClick.bind(this);
+    this.onCancelClick = this.onCancelClick.bind(this);
+
+    const { title, html } = this.props.newsItem;
+    this.state = {
+      isEditing: false,
+      newTitle: title,
+      newHtml: html
+    };
+  }
+
+  onEditClick(e) {
+    e.preventDefault();
+    this.setState({ isEditing: true });
+  }
+
+  onDeleteClick(e) {
+    e.preventDefault();
+
+    const { deleteNewsItem } = this.props;
+    const { id } = this.props.newsItem;
+    deleteNewsItem(id);
+  }
+
+  onTitleChange(e) {
+    this.setState({ newTitle: e.target.value });
+  }
+
+  onHtmlChange(e) {
+    this.setState({ newHtml: e.target.value });
+  }
+
+  onSaveClick(e) {
+    e.preventDefault();
+
+    const { editNewsItem } = this.props;
+    const { id } = this.props.newsItem;
+    const { newTitle, newHtml } = this.state;
+    editNewsItem(id, newTitle, newHtml);
+    this.setState({ isEditing: false });
+  }
+
+  onCancelClick(e) {
+    e.preventDefault();
+    this.setState({ isEditing: false });
+  }
+
   render() {
-    return (
-      <div className="card news-item">
-        <div className="card-body">
-          <h5 className="card-title">{this.props.title}</h5>
-          <h6 className="card-subtitle mb-2 text-muted">{this.props.date} by {this.props.author}</h6>
-          {this.props.children}
+    const { isEditing, newTitle, newHtml } = this.state;
+    const { title, date, author, html } = this.props.newsItem;
+    if (isEditing) {
+      return (
+        <div className="card news-item">
+          <div className="card-body">
+            <input className="card-title form-control" onChange={this.onTitleChange} value={newTitle} />
+            <h6 className="card-subtitle mb-2 text-muted">{date} by {author}</h6>
+            <textarea className="form-control" rows="10" onChange={this.onHtmlChange} value={newHtml} />
+            <div className="mt-3 pull-right">
+              <button type="submit" className="btn btn-primary" onClick={this.onSaveClick}>Save</button>&nbsp;
+              <button className="btn btn-secondary" onClick={this.onCancelClick}>Cancel</button>
+            </div>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div className="card news-item">
+          <div className="card-body">
+            <div className="edit-links">
+              <a role="button" tabIndex="0" onClick={this.onEditClick}>[edit]</a>&nbsp;
+              <a role="button" tabIndex="0" onClick={this.onDeleteClick}>[delete]</a>
+            </div>
+            <h5 className="card-title">{title}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{date} by {author}</h6>
+            <div dangerouslySetInnerHTML={{ __html: html }} />
+          </div>
+        </div>
+      )
+    }
   }
 }
+NewsItem.propTypes = {
+  deleteNewsItem: PropTypes.func.isRequired,
+  editNewsItem: PropTypes.func.isRequired,
+  newsItem: PropTypes.object.isRequired,
+};
 
 const propTypes = {
+  deleteNewsItem: PropTypes.func.isRequired,
+  editNewsItem: PropTypes.func.isRequired,
   fetchNewsItems: PropTypes.func.isRequired,
-  hasFetchedNews: PropTypes.bool.isRequired,
   isFetchingNews: PropTypes.bool.isRequired,
+  hasFetchedNews: PropTypes.bool.isRequired,
   newsItems: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
-  hasFetchedNews: News.isFetching(state),
   isFetchingNews: News.hasFetched(state),
+  hasFetchedNews: News.isFetching(state),
   newsItems: News.getItems(state),
 });
 
@@ -43,13 +125,11 @@ export class HomePage extends Component {
 
   render() {
     const renderNewsList = () => {
-      const { newsItems } = this.props;
+      const { deleteNewsItem, editNewsItem, newsItems } = this.props;
       if (newsItems) {
         return newsItems.map((newsItem, index) => {
           return (
-            <NewsItem key={index} title={newsItem.title} date={newsItem.date} author={newsItem.author}>
-              <div dangerouslySetInnerHTML={{ __html: newsItem.html }} />
-            </NewsItem>
+            <NewsItem key={index} newsItem={newsItem} deleteNewsItem={deleteNewsItem} editNewsItem={editNewsItem} />
           )
         })
       } else {

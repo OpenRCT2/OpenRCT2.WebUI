@@ -36,6 +36,22 @@ export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
   );
 };
 
+export const deleteNewsItem = id => (dispatch, getState) => {
+  const state = getState();
+  const token = Profile.getToken(state);
+  api.deleteNewsItem(token, id).then(
+    () => fetchNewsItems(0, 3)(dispatch, getState)
+  );
+};
+
+export const editNewsItem = (id, title, html) => (dispatch, getState) => {
+  const state = getState();
+  const token = Profile.getToken(state);
+  api.editNewsItem(token, id, title, html).then(
+    () => fetchNewsItems(0, 3)(dispatch, getState)
+  );
+};
+
 export const fetchServers = () => (dispatch, getState) => {
   if (Servers.getIsFetching(getState().servers)) {
     return Promise.resolve();
