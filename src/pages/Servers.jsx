@@ -1,35 +1,69 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ReactTable from 'react-table'
 import * as actions from '../actions';
 import { PageBanner } from '../components/PageBanner';
 import { Servers } from '../selectors';
+import 'react-table/react-table.css'
 import './Servers.css';
 
-const FetchError = ({ message, onRetry }) => (
-  <div>
-    <p>Could not fetch servers. {message}</p>
-    <button className="btn btn-primary btn-sm" onClick={onRetry}>Retry</button>
-  </div>
-);
-
-FetchError.propTypes = {
-  message: PropTypes.string.isRequired,
-  onRetry: PropTypes.func.isRequired,
-};
-
-class ServerItem extends Component {
-  render() {
-    const { server } = this.props;
-    return (
-      <li>
-        <div className="ServerItem-name">{server.name}</div>
-        <div className="ServerItem-players">{server.players} players</div>
-        <div className="ServerItem-description">{server.description}</div>
-      </li>
-    )
+const ServerTableColumns = [
+  {
+    Header: <i className="fa fa-lock" title="Password protected" />,
+    Cell: props => {
+      if (props.original.requiresPassword) {
+        return (<i className="fa fa-lock" />);
+      } else {
+        return null;
+      }
+    },
+    accessor: 'requiresPassword',
+    maxWidth: 25,
+    style: {
+      textAlign: 'center'
+    }
+  },
+  {
+    Header: 'Name',
+    Cell: props => (
+      <div style={{margin: '-6px 0'}}>
+        <div>{props.original.name}</div>
+        <div style={{fontSize: '10px'}}>{props.original.description}</div>
+      </div>
+    ),
+    accessor: 'name',
+    headerStyle: {
+      textAlign: 'left'
+    }
+  }, {
+    id: 'years',
+    Header: <i className="fa fa-calendar" title="Years" />,
+    Cell: props => Math.floor(props.original.gameInfo.month / 8),
+    accessor: row => row.gameInfo.month,
+    style: {
+      textAlign: 'right'
+    },
+    minWidth: 6
+  }, {
+    Header: <i className="fa fa-users" title="Players" />,
+    Cell: props => (
+      <React.Fragment>{props.original.players} / {props.original.maxPlayers}</React.Fragment>
+    ),
+    accessor: 'players',
+    minWidth: 10,
+    style: {
+      textAlign: 'center'
+    }
+  }, {
+    Header: <i className="fa fa-code-fork" title="Version" />,
+    accessor: 'version',
+    minWidth: 8,
+    style: {
+      textAlign: 'right'
+    }
   }
-}
+];
 
 const propTypes = {
   errorMessage: PropTypes.string,
@@ -55,39 +89,49 @@ export class ServersPage extends Component {
     this.props.fetchServers();
   }
 
+  sortServers(servers) {
+    return servers.sort((a, b) => {
+      // Penalise servers with only 1 player
+      if (a.players <= 1 && b.players > 1) {
+        return 1;
+      } else if (a.players > 1 && b.players <= 1) {
+        return -1;
+      }
+
+      // Prioritise public servers
+      if (a.requiresPassword && !b.requiresPassword) {
+        return 1;
+      } else if (!a.requiresPassword && b.requiresPassword) {
+        return -1;
+      }
+
+      // Then by players
+      if (a.players !== b.players) {
+        return b.players - a.players;
+      }
+
+      // Then finally by name
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
+  }
+
   render() {
     const ServerList = () => {
       const { isFetching, errorMessage, servers } = this.props;
-      if (isFetching && servers.length === 0) {
-        return (
-          <p className="Servers-intro">Loading...</p>
-        );
-      }
-      if (errorMessage && servers.length === 0) {
-        return (
-          <FetchError
-            message={errorMessage}
-            onRetry={() => this.fetchData()}
-          />
-        );
-      }
-
-      // Sort servers by # players (desc) and then name (asc)
-      let sortedServers = servers.sort((a, b) => {
-        if (a.players !== b.players) {
-          return b.players - a.players;
-        }
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
-        return 0;
-      });
-
+      const sortedServers = this.sortServers(servers);
+      console.log(sortedServers);
       return (
-        <ul className="ul-stack Servers-list">
-          {sortedServers.map((server, index) =>
-            <ServerItem key={index} server={server} />
-          )}
-        </ul>
+        <ReactTable
+          data={sortedServers}
+          columns={ServerTableColumns}
+          resizable={false}
+          defaultPageSize={50}
+          minRows={8}
+          loading={isFetching}
+          noDataText={errorMessage}
+          className="-striped -highlight" />
       );
     }
 
