@@ -120,6 +120,11 @@ const mapStateToProps = state => ({
 });
 
 export class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.onCreateClick = this.onCreateClick.bind(this);
+  }
+
   componentDidMount() {
     const { fetchNewsItems, hasFetchedNews } = this.props;
     if (!hasFetchedNews) {
@@ -127,19 +132,36 @@ export class HomePage extends Component {
     }
   }
 
+  onCreateClick(e) {
+    e.preventDefault();
+    const { createNewsItem } = this.props;
+    createNewsItem('News item title...', '<p>Your news item content...</p>')
+  }
+
   render() {
+    const renderCreateNewsItem = () => (
+      <div className="card news-item">
+        <div className="card-body">
+          <a role="button" tabIndex="0" onClick={this.onCreateClick}>Create news item</a>&nbsp;
+        </div>
+      </div>
+    );
+
     const renderNewsList = () => {
       const { deleteNewsItem, editNewsItem, newsItems } = this.props;
       if (newsItems) {
-        return newsItems.map((newsItem, index) => {
-          return (
-            <NewsItem key={index} newsItem={newsItem} deleteNewsItem={deleteNewsItem} editNewsItem={editNewsItem} />
-          )
-        })
+        return (
+          <React.Fragment>
+            {renderCreateNewsItem()}
+            {newsItems.map((newsItem, index) => (
+                <NewsItem key={newsItem.id} newsItem={newsItem} deleteNewsItem={deleteNewsItem} editNewsItem={editNewsItem} />
+            ))}
+          </React.Fragment>
+        )
       } else {
         return (<div>Refreshing news items...</div>)
       }
-    }
+    };
     return (
       <React.Fragment>
         <div id="home-banner" className="container page-banner page-banner-home">

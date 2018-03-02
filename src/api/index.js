@@ -97,6 +97,21 @@ export const deleteNewsItem = (token, id) =>
         }
     });
 
+export const createNewsItem = (token, title, html) =>
+    fetch(API_URL_NEWS, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title, html }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(response.json().message)
+        }
+    });
+
 export const editNewsItem = (token, id, title, html) =>
     fetch(API_URL_NEWS, {
         method: 'PUT',

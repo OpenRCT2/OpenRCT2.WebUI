@@ -64,6 +64,34 @@ export const deleteNewsItem = id => (dispatch, getState) => {
   );
 };
 
+export const createNewsItem = (title, html) => (dispatch, getState) => {
+  const state = getState();
+  const token = Profile.getToken(state);
+  return api.createNewsItem(token, title, html).then(
+    () => {
+      fetchNewsItems(0, 3)(dispatch, getState);
+      dispatch(
+        Notifications.success({
+          title: 'News item created',
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+    },
+    error => {
+      dispatch(
+        Notifications.error({
+          title: 'News item could not be created',
+          message: error.message,
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+      throw error;
+    }
+  );
+}
+
 export const editNewsItem = (id, title, html) => (dispatch, getState) => {
   const state = getState();
   const token = Profile.getToken(state);
