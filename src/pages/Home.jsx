@@ -9,6 +9,7 @@ import logo from '../img/logo.png';
 class NewsItem extends Component {
   constructor(props) {
     super(props);
+    this.onPublishClick = this.onPublishClick.bind(this);
     this.onEditClick = this.onEditClick.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onTitleChange = this.onTitleChange.bind(this);
@@ -22,6 +23,14 @@ class NewsItem extends Component {
       newTitle: title,
       newHtml: html
     };
+  }
+
+  onPublishClick(e) {
+    e.preventDefault();
+    const { editNewsItem } = this.props;
+    const { id } = this.props.newsItem;
+    const { newTitle, newHtml } = this.state;
+    editNewsItem(id, newTitle, newHtml, true);
   }
 
   onEditClick(e) {
@@ -49,9 +58,9 @@ class NewsItem extends Component {
     e.preventDefault();
 
     const { editNewsItem } = this.props;
-    const { id } = this.props.newsItem;
+    const { id, isPublished } = this.props.newsItem;
     const { newTitle, newHtml } = this.state;
-    editNewsItem(id, newTitle, newHtml).then(
+    editNewsItem(id, newTitle, newHtml, isPublished ? true : null).then(
       () => this.setState({ isEditing: false })
     );
   }
@@ -63,10 +72,14 @@ class NewsItem extends Component {
 
   render() {
     const { isEditing, newTitle, newHtml } = this.state;
-    const { title, date, author, html } = this.props.newsItem;
+    const { title, date, author, html, isPublished } = this.props.newsItem;
+    let cardStyle = {};
+    if (!isPublished) {
+      cardStyle.backgroundColor = '#ffe';
+    }
     if (isEditing) {
       return (
-        <div className="card news-item">
+        <div className="card news-item" style={cardStyle}>
           <div className="card-body">
             <input className="card-title form-control" onChange={this.onTitleChange} value={newTitle} />
             <h6 className="card-subtitle mb-2 text-muted">{date} by {author}</h6>
@@ -80,10 +93,13 @@ class NewsItem extends Component {
       )
     } else {
       return (
-        <div className="card news-item">
+        <div className="card news-item" style={cardStyle}>
           <div className="card-body">
             <div className="edit-links">
-              <a role="button" tabIndex="0" onClick={this.onEditClick}>[edit]</a>&nbsp;
+              {!isPublished &&
+                <a role="button" tabIndex="0" onClick={this.onPublishClick}>[publish]</a>
+              }
+              &nbsp;<a role="button" tabIndex="0" onClick={this.onEditClick}>[edit]</a>&nbsp;
               <a role="button" tabIndex="0" onClick={this.onDeleteClick}>[delete]</a>
             </div>
             <h5 className="card-title">{title}</h5>

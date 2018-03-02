@@ -92,10 +92,10 @@ export const createNewsItem = (title, html) => (dispatch, getState) => {
   );
 }
 
-export const editNewsItem = (id, title, html) => (dispatch, getState) => {
+export const editNewsItem = (id, title, html, published) => (dispatch, getState) => {
   const state = getState();
   const token = Profile.getToken(state);
-  return api.editNewsItem(token, id, title, html).then(
+  return api.editNewsItem(token, id, title, html, published).then(
     () => {
       fetchNewsItems(0, 3)(dispatch, getState);
       dispatch(

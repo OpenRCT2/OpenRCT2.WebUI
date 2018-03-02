@@ -112,14 +112,14 @@ export const createNewsItem = (token, title, html) =>
         }
     });
 
-export const editNewsItem = (token, id, title, html) =>
+export const editNewsItem = (token, id, title, html, published) =>
     fetch(API_URL_NEWS, {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, title, html }),
+        body: JSON.stringify({ id, title, html, published }),
     })
     .then(response => {
         if (!response.ok) {
