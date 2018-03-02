@@ -10,6 +10,7 @@ import { PageNotFoundPage } from '../pages/PageNotFound';
 import { SignInPage } from '../pages/SignIn';
 import { SignOutPage } from '../pages/SignOut';
 import { SignUpPage } from '../pages/SignUp';
+import { NotificationsContainer } from './NotificationsContainer';
 import { TopBar } from './TopBar';
 import { Footer } from './Footer';
 
@@ -21,6 +22,7 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <BrowserRouter>
       <React.Fragment>
+        <NotificationsContainer />
         <TopBar profile={store.getState().profile} />
         <Switch>
           <Route exact path="/" component={HomePage}/>

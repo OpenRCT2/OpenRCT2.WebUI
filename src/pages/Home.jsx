@@ -51,8 +51,9 @@ class NewsItem extends Component {
     const { editNewsItem } = this.props;
     const { id } = this.props.newsItem;
     const { newTitle, newHtml } = this.state;
-    editNewsItem(id, newTitle, newHtml);
-    this.setState({ isEditing: false });
+    editNewsItem(id, newTitle, newHtml).then(
+      () => this.setState({ isEditing: false })
+    );
   }
 
   onCancelClick(e) {
@@ -98,6 +99,9 @@ NewsItem.propTypes = {
   deleteNewsItem: PropTypes.func.isRequired,
   editNewsItem: PropTypes.func.isRequired,
   newsItem: PropTypes.object.isRequired,
+};
+NewsItem.contextTypes = {
+  store: PropTypes.object
 };
 
 const propTypes = {

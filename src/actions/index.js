@@ -1,4 +1,5 @@
 // eslint-disable-next-line
+import * as Notifications from 'react-notification-system-redux';
 import * as shajs from 'sha.js';
 import * as api from '../api';
 import { SiteConfig } from '../config';
@@ -39,16 +40,55 @@ export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
 export const deleteNewsItem = id => (dispatch, getState) => {
   const state = getState();
   const token = Profile.getToken(state);
-  api.deleteNewsItem(token, id).then(
-    () => fetchNewsItems(0, 3)(dispatch, getState)
+  return api.deleteNewsItem(token, id).then(
+    () => {
+      fetchNewsItems(0, 3)(dispatch, getState)
+      dispatch(
+        Notifications.success({
+          title: 'News item deleted',
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+    },
+    error => {
+      dispatch(
+        Notifications.error({
+          title: 'News item could not be deleted',
+          message: error.message,
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+    }
   );
 };
 
 export const editNewsItem = (id, title, html) => (dispatch, getState) => {
   const state = getState();
   const token = Profile.getToken(state);
-  api.editNewsItem(token, id, title, html).then(
-    () => fetchNewsItems(0, 3)(dispatch, getState)
+  return api.editNewsItem(token, id, title, html).then(
+    () => {
+      fetchNewsItems(0, 3)(dispatch, getState);
+      dispatch(
+        Notifications.success({
+          title: 'News item updated',
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+    },
+    error => {
+      dispatch(
+        Notifications.error({
+          title: 'News item could not be updated',
+          message: error.message,
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+      throw error;
+    }
   );
 };
 
