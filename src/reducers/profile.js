@@ -23,6 +23,7 @@ const reducer = (state = initialState, action) => {
         state: ProfileState.SIGNED_IN,
         token: action.token,
         name: action.user.name,
+        permissions: action.user.permissions
       };
       localStorage['profile'] = JSON.stringify(newState);
       return newState;

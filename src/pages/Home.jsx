@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import { News } from '../selectors';
+import { News, Profile } from '../selectors';
 import './Home.css';
 import logo from '../img/logo.png';
 
@@ -71,8 +71,9 @@ class NewsItem extends Component {
   }
 
   render() {
-    const { isEditing, newTitle, newHtml } = this.state;
+    const { hasEditPermissions } = this.props;
     const { title, date, author, html, isPublished } = this.props.newsItem;
+    const { isEditing, newTitle, newHtml } = this.state;
     let cardStyle = {};
     if (!isPublished) {
       cardStyle.backgroundColor = '#ffe';
@@ -95,13 +96,15 @@ class NewsItem extends Component {
       return (
         <div className="card news-item" style={cardStyle}>
           <div className="card-body">
-            <div className="edit-links">
-              {!isPublished &&
-                <a role="button" tabIndex="0" onClick={this.onPublishClick}>[publish]</a>
-              }
-              &nbsp;<a role="button" tabIndex="0" onClick={this.onEditClick}>[edit]</a>&nbsp;
-              <a role="button" tabIndex="0" onClick={this.onDeleteClick}>[delete]</a>
-            </div>
+            {hasEditPermissions &&
+              <div className="edit-links">
+                {!isPublished &&
+                  <a role="button" tabIndex="0" onClick={this.onPublishClick}>[publish]</a>
+                }
+                &nbsp;<a role="button" tabIndex="0" onClick={this.onEditClick}>[edit]</a>&nbsp;
+                <a role="button" tabIndex="0" onClick={this.onDeleteClick}>[delete]</a>
+              </div>
+            }
             <h5 className="card-title">{title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{date} by {author}</h6>
             <div dangerouslySetInnerHTML={{ __html: html }} />
@@ -114,6 +117,7 @@ class NewsItem extends Component {
 NewsItem.propTypes = {
   deleteNewsItem: PropTypes.func.isRequired,
   editNewsItem: PropTypes.func.isRequired,
+  hasEditPermissions: PropTypes.bool.isRequired,
   newsItem: PropTypes.object.isRequired,
 };
 NewsItem.contextTypes = {
@@ -131,6 +135,7 @@ const propTypes = {
 
 const mapStateToProps = state => ({
   isFetchingNews: News.hasFetched(state),
+  hasEditPermissions: Profile.hasPermission(state, 'news.write'),
   hasFetchedNews: News.isFetching(state),
   newsItems: News.getItems(state),
 });
@@ -164,13 +169,18 @@ export class HomePage extends Component {
     );
 
     const renderNewsList = () => {
-      const { deleteNewsItem, editNewsItem, newsItems } = this.props;
+      const { deleteNewsItem, editNewsItem, hasEditPermissions, newsItems } = this.props;
       if (newsItems) {
         return (
           <React.Fragment>
             {renderCreateNewsItem()}
             {newsItems.map((newsItem, index) => (
-                <NewsItem key={newsItem.id} newsItem={newsItem} deleteNewsItem={deleteNewsItem} editNewsItem={editNewsItem} />
+                <NewsItem
+                  key={newsItem.id}
+                  editNewsItem={editNewsItem}
+                  deleteNewsItem={deleteNewsItem}
+                  hasEditPermissions={hasEditPermissions}
+                  newsItem={newsItem} />
             ))}
           </React.Fragment>
         )

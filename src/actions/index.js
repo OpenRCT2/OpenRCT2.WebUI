@@ -3,7 +3,7 @@ import * as Notifications from 'react-notification-system-redux';
 import * as shajs from 'sha.js';
 import * as api from '../api';
 import { SiteConfig } from '../config';
-import { Servers, Profile } from '../selectors';
+import { News, Servers, Profile } from '../selectors';
 
 const hashPassword = (password) => {
   let salt = SiteConfig.passwordClientSalt;
@@ -13,7 +13,9 @@ const hashPassword = (password) => {
 }
 
 export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
-  if (getState().news.isFetching) {
+  const state = getState();
+  const token = Profile.getToken(state);
+  if (News.isFetching(state)) {
     return Promise.resolve();
   }
 
@@ -21,7 +23,7 @@ export const fetchNewsItems = (skip, take) => (dispatch, getState) => {
     type: 'FETCH_NEWS_REQUEST',
   });
 
-  return api.fetchNewsItems(skip, take).then(
+  return api.fetchNewsItems(token, skip, take).then(
     response => {
       dispatch({
         type: 'FETCH_NEWS_SUCCESS',

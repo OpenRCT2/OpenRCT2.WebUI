@@ -10,6 +10,19 @@ const API_URL_USER_AUTH = `${SiteConfig.apiUrl}/user/auth`;
 //     setTimeout(func, delay);
 // };
 
+const withAuthorization = (props, token) => {
+    if (!token) {
+        return props;
+    }
+    return {
+      ...props,
+      headers: {
+        ...props.headers,
+        'Authorization': `Bearer ${token}`,
+      }
+    }
+};
+
 export const fetchServers = () =>
     fetch(API_URL_SERVERS)
         .then((response) => response.json())
@@ -71,8 +84,9 @@ export const signUp = signUpDetails =>
         }
     });
 
-export const fetchNewsItems = (skip, take) =>
-    fetch(`${API_URL_NEWS}?skip=${skip}&take=${take}`)
+export const fetchNewsItems = (token, skip, take) =>
+    fetch(`${API_URL_NEWS}?skip=${skip}&take=${take}`,
+        withAuthorization({}, token))
     .then(response => response.json())
     .then(json => {
         if (json.status === 'ok') {
