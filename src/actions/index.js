@@ -185,11 +185,15 @@ export const signOut = () => (dispatch, getState) => {
         });
       })
       .catch(error => {
-        dispatch({
-          type: 'SIGN_OUT_FAILURE',
-          message: error.message || 'Something went wrong.',
-        });
-        throw new Error();
+        dispatch(
+          Notifications.error({
+            title: 'Unable to sign you out',
+            message: error.message,
+            position: 'tr',
+            autoDismiss: 5
+          })
+        );
+        throw error;
       });
   }
   return Promise.resolve();
