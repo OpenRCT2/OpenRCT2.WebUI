@@ -2,6 +2,7 @@ import { SiteConfig } from "../config";
 
 const API_URL_NEWS = `${SiteConfig.apiUrl}/news`;
 const API_URL_SERVERS = `${SiteConfig.apiUrl}/servers`;
+const API_URL_USER = `${SiteConfig.apiUrl}/user`;
 const API_URL_USER_CREATE = `${SiteConfig.apiUrl}/user/create`;
 const API_URL_USER_AUTH = `${SiteConfig.apiUrl}/user/auth`;
 
@@ -140,3 +141,32 @@ export const editNewsItem = (token, id, title, html, published) =>
             throw new Error(response.json().message)
         }
     });
+
+export const fetchUser = name =>
+    fetch(`${API_URL_USER}/${name}`)
+    .then(response => response.json())
+    .then(json => {
+        if (json.status === 'ok') {
+            return json.result;
+        } else {
+            throw new Error(json.message);
+        }
+    });
+
+export const editUser = (userName, token, userData) => {
+    const params = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+    };
+    return fetch(`${API_URL_USER}/${userName}`,
+        withAuthorization(params, token))
+    .then(response => response.json())
+    .then(json => {
+        if (json.status !== 'ok') {
+            throw new Error(json.message);
+        }
+    });
+};

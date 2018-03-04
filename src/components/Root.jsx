@@ -6,6 +6,7 @@ import { HomePage } from '../pages/Home';
 import { AboutPage } from '../pages/About';
 import { CoasterCloudPage } from '../pages/CoasterCloud';
 import { ServersPage } from '../pages/Servers';
+import { ProfilePage } from '../pages/Profile';
 import { PageNotFoundPage } from '../pages/PageNotFound';
 import { SignInPage } from '../pages/SignIn';
 import { SignOutPage } from '../pages/SignOut';
@@ -29,6 +30,7 @@ const Root = ({ store }) => (
           <Route path="/about" component={AboutPage}/>
           <Route path="/coastercloud" component={CoasterCloudPage}/>
           <Route path="/servers" component={ServersPage}/>
+          <Route path="/user/:userName" component={ProfilePage}/>
           <Route path="/signin" component={SignInPage}/>
           <Route path="/signout" component={SignOutPage}/>
           <Route path="/signup" component={SignUpPage}/>

@@ -33,9 +33,12 @@ export class TopBar extends Component {
       if (isSignedIn) {
         return (
           <div className="text-light">
-            <Link className="no-link-decor" to="/signout">
+            <Link className="no-link-decor" to="/signout" title="Sign out">
               <i className="fa fa-sign-out" />
-            </Link> {userName}
+            </Link>&nbsp;
+            <Link className="no-link-decor" to={"/user/" + userName}>
+             {userName}
+            </Link>
           </div>
         )
       } else {

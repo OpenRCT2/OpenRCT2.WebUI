@@ -220,3 +220,30 @@ export const signUp = signUpDetails => (dispatch, getState) => {
   }
   return Promise.resolve();
 }
+
+export const editUser = (userName, userData) => (dispatch, getState) => {
+  const state = getState();
+  const token = Profile.getToken(state);
+  return api.editUser(userName, token, userData).then(
+    () => {
+      dispatch(
+        Notifications.success({
+          title: 'Profile updated',
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+    },
+    error => {
+      dispatch(
+        Notifications.error({
+          title: 'Profile could not be updated',
+          message: error.message,
+          position: 'tr',
+          autoDismiss: 5
+        })
+      );
+      throw error;
+    }
+  );
+}
