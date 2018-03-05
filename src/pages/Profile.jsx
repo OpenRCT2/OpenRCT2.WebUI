@@ -11,6 +11,83 @@ const traitIcons = {
   Streamer: "fa-video-camera"
 }
 
+export class EditableTextArea extends Component {
+  constructor(props) {
+    super(props);
+    this.onEditClick = this.onEditClick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onCancelClick = this.onCancelClick.bind(this);
+    this.onSaveClick = this.onSaveClick.bind(this);
+    this.state = {
+      editing: false,
+      value: props.value
+    };
+  }
+
+  onEditClick(e) {
+    e.preventDefault();
+    this.setState({ editing: true });
+  }
+
+  onChange(e) {
+    this.setState({ value: e.target.value })
+  }
+
+  onCancelClick() {
+    this.setState({ editing: false });
+  }
+
+  onSaveClick() {
+    const { onChangeApply } = this.props;
+    Promise.resolve(onChangeApply(this.state.value)).then(
+      value => {
+        this.setState({ editing: false });
+      }
+    );
+  }
+
+  render() {
+    const { display, readOnly } = this.props;
+    const { editing } = this.state;
+    if (editing) {
+      return (
+        <div className="row">
+          <div className="col">
+            <div>
+              <textarea className="form-control" rows="5" onChange={this.onChange} value={this.state.value} />
+              <div className="pull-right mt-1">
+                <button className="btn btn-sm btn-secondary" onClick={this.onCancelClick}>Cancel</button>&nbsp;
+                <button className="btn btn-sm btn-primary" onClick={this.onSaveClick}>Save</button>
+              </div>
+            </div>
+          </div>
+          <div className="col-auto">
+            {!readOnly &&
+              <a role="button" tabIndex="0" onClick={this.onEditClick}><i className="fa fa-edit" /></a>}
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="row">
+          <div className="col">
+            {display}
+          </div>
+          <div className="col-auto">
+            {!readOnly &&
+              <a role="button" tabIndex="0" onClick={this.onEditClick}><i className="fa fa-edit" /></a>}
+          </div>
+        </div>
+      )
+    }
+  }
+}
+EditableTextArea.props = {
+  display: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
 const propTypes = {
   myUserName: PropTypes.string.isRequired,
   hasWritePermission: PropTypes.bool.isRequired,
@@ -23,14 +100,9 @@ const mapStateToProps = state => ({
 export class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    this.onEditBioClick = this.onEditBioClick.bind(this);
-    this.onBioChange = this.onBioChange.bind(this);
-    this.onBioCancelClick = this.onBioCancelClick.bind(this);
-    this.onBioSaveClick = this.onBioSaveClick.bind(this);
+    this.onBioChangeApply = this.onBioChangeApply.bind(this);
     this.state = {
-      editing: null,
-      profile: null,
-      value: ''
+      profile: null
     };
   }
 
@@ -47,32 +119,28 @@ export class ProfilePage extends Component {
     return hasWritePermission || myUserName === profile.name;
   }
 
-  onEditBioClick(e) {
-    e.preventDefault();
-    this.setState({ editing: 'bio', value: this.state.profile.bio });
-  }
-
-  onBioChange(e) {
-    this.setState({ value: e.target.value })
-  }
-
-  onBioCancelClick(e) {
-    this.setState({ editing: null });
-  }
-
-  onBioSaveClick(e) {
+  onBioChangeApply(newValue) {
     const { editUser } = this.props;
-    const { profile, value } = this.state;
+    const { profile } = this.state;
     const userData = {
-      bio: value
+      bio: newValue
     };
     editUser(profile.name, userData).then(
       () => {
-        const newProfile = {...profile, bio: value };
-        this.setState({ editing: null, profile: newProfile })
+        const newProfile = {...profile, bio: newValue };
+        this.setState({ profile: newProfile })
       }
     );
   }
+
+  getFormattedFragment = text =>
+    text.split('\n\n').map((text, i) => (
+      <p key={i}>
+        {text.split('\n').map((text, i) => (
+          <React.Fragment>{text}<br /></React.Fragment>
+        ))}
+      </p>
+    ));
 
   render() {
     const { profile } = this.state;
@@ -98,18 +166,11 @@ export class ProfilePage extends Component {
       <div><i className={"mr-2 fa " + props.icon} style={{width: 16}} />{props.children}</div>
     )
 
-    let bio = user.bio;
-    if (bio) {
-      bio = bio.split('\n\n').map((text, i) => (
-        <p key={i}>
-          {text.split('\n').map((text, i) => (
-            <React.Fragment>{text}<br /></React.Fragment>
-          ))}
-        </p>
-      ));
-      console.log(bio);
+    let bio = { value: user.bio }
+    if (bio.value) {
+      bio.display = this.getFormattedFragment(bio.value);
     } else {
-      bio = (<span className="text-muted">Tell us your RCT history!</span>);
+      bio.display = (<span className="text-muted">Tell us your RCT history!</span>);
     }
 
     return (
@@ -134,23 +195,10 @@ export class ProfilePage extends Component {
             <div className="col-9">
               <h3><i className="fa fa-user" /> {user.name}</h3>
               <hr />
-              <div className="row">
-                <div className="col">
-                  {this.state.editing === 'bio' ?
-                    <div>
-                      <textarea className="form-control" rows="5" onChange={this.onBioChange} value={this.state.value} />
-                      <div className="pull-right mt-1">
-                        <button className="btn btn-sm btn-secondary" onClick={this.onBioCancelClick}>Cancel</button>&nbsp;
-                        <button className="btn btn-sm btn-primary" onClick={this.onBioSaveClick}>Save</button>
-                      </div>
-                    </div> :
-                    bio}
-                </div>
-                <div className="col-auto">
-                  {canEdit &&
-                    <a role="button" tabIndex="0" onClick={this.onEditBioClick}><i className="fa fa-edit" /></a>}
-                </div>
-              </div>
+              <EditableTextArea
+                readOnly={!canEdit}
+                display={bio.display} value={bio.value}
+                onChangeApply={this.onBioChangeApply} />
             </div>
           </div>
         </div>
