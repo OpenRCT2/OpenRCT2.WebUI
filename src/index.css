@@ -76,6 +76,7 @@ footer .sponsor img {
 
 a[role=button] {
     cursor: pointer;
+    outline: none;
 }
 
 .download-icon {
