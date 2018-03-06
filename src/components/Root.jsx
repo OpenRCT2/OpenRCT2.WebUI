@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomePage } from '../pages/Home';
 import { AboutPage } from '../pages/About';
+import { DownloadPage } from '../pages/Download';
 import { CoasterCloudPage } from '../pages/CoasterCloud';
 import { ServersPage } from '../pages/Servers';
 import { ProfilePage } from '../pages/Profile';
@@ -28,6 +29,7 @@ const Root = ({ store }) => (
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route path="/about" component={AboutPage}/>
+          <Route path="/download" component={DownloadPage}/>
           <Route path="/coastercloud" component={CoasterCloudPage}/>
           <Route path="/servers" component={ServersPage}/>
           <Route path="/user/:userName" component={ProfilePage}/>

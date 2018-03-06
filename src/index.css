@@ -77,3 +77,39 @@ footer .sponsor img {
 a[role=button] {
     cursor: pointer;
 }
+
+.download-icon {
+    display: block;
+    font-size: 80px;
+    text-align: center;
+}
+
+.download-button {
+    background-color: #373277;
+    color: #eee;
+    cursor: pointer;
+    display: block;
+    border: none;
+    margin: 16px auto 0 auto;
+    padding: 12px;
+    font-size: large;
+}
+
+.download-button:hover {
+    background-color: rgba(55,50,119,0.8);
+}
+
+.download-button .sub-text {
+    color: #bbb;
+    font-size: small;
+    font-weight: bold;
+}
+
+.tab-content {
+    background-color: #fff;
+    border-left: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    padding: 16px;
+    margin-bottom: 12px;
+}
