@@ -1,5 +1,6 @@
 import { SiteConfig } from "../config";
 
+const API_URL_BUILD_LATEST = `${SiteConfig.apiUrl}/build/latest`;
 const API_URL_NEWS = `${SiteConfig.apiUrl}/news`;
 const API_URL_SERVERS = `${SiteConfig.apiUrl}/servers`;
 const API_URL_USER = `${SiteConfig.apiUrl}/user`;
@@ -170,3 +171,14 @@ export const editUser = (userName, token, userData) => {
         }
     });
 };
+
+export const fetchLatestBuilds = () =>
+    fetch(API_URL_BUILD_LATEST)
+    .then(response => response.json())
+    .then(json => {
+        if (json.status === 'ok') {
+            return json.result;
+        } else {
+            throw new Error(json.message);
+        }
+    });

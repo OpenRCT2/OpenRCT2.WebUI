@@ -87,17 +87,20 @@ a[role=button] {
 
 .download-button {
     background-color: #373277;
+    border: none;
     color: #eee;
     cursor: pointer;
     display: block;
-    border: none;
+    font-size: large;
     margin: 16px auto 0 auto;
     padding: 12px;
-    font-size: large;
+    text-align: center;
 }
 
 .download-button:hover {
     background-color: rgba(55,50,119,0.8);
+    color: #eee;
+    text-decoration: none;
 }
 
 .download-button .sub-text {
