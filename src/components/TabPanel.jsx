@@ -11,7 +11,7 @@ export class TabPanel extends Component {
 
   onTabClick(e) {
     e.preventDefault();
-    const index = parseInt(e.target.getAttribute('data-index'), 10);
+    const index = parseInt(e.currentTarget.getAttribute('data-index'), 10);
     this.setState({ selectedIndex: index });
   }
 

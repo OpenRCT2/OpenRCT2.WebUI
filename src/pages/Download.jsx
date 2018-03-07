@@ -31,7 +31,6 @@ export class DownloadPage extends Component {
       this.setState({
         builds: buildsByFlavour,
         date: result.date });
-      console.log(this.state);
     });
   }
 
@@ -78,19 +77,26 @@ export class DownloadPage extends Component {
       }
     };
 
+    const TabText = props => (
+      <React.Fragment>
+        {props.text}
+        <span className={"ml-2 badge " + props.badgeClass}>{props.badgeText}</span>
+      </React.Fragment>
+    )
+
     return (
       <React.Fragment>
         <PageBanner image="about">Download OpenRCT2</PageBanner>
         <div className="container container-main">
           <h3>Builds</h3>
           <TabPanel>
-            <Tab text="v0.1.2 (develop)">
+            <Tab text={<TabText text="v0.1.2" badgeClass="badge-success" badgeText="develop" />}>
               <p>
                 The development builds of the game provide you with the latest features and bug fixes. The builds are updated in real time as code changes are committed. Bugs may manifest from time to time, in such case you can try reverting to an older build or use the last release until the bug has been fixed. Please report any bugs via <ExternalLink href="https://github.com/OpenRCT2/OpenRCT2/issues">GitHub</ExternalLink>.
               </p>
               <LatestBuilds />
             </Tab>
-            <Tab text="v0.1.1 (master)">
+            <Tab text={<TabText text="v0.1.1" badgeClass="badge-primary" badgeText="master" />}>
               <div className="row">
                 <PlatformDownload icon="fa-windows" text="Windows" subtext="Windows 7, 8, 10" url="https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.1.1/OpenRCT2-0.1.1-windows-portable-x64.zip" />
                 <PlatformDownload icon="fa-apple" text="macOS" subtext="macOS 10.09+" url="https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.1.1/OpenRCT2-0.1.1-macos.zip" />
