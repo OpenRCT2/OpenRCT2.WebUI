@@ -1,4 +1,4 @@
-import { Schema, arrayOf } from 'normalizr';
+import { arrayOf, schema } from 'normalizr';
 
-export const server = new Schema('servers');
+export const server = schema.Entity('servers');
 export const arrayOfServers = arrayOf(server);

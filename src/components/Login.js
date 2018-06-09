@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
 import { getAuth, getAuthErrorMessage, getAuthIsFetching } from '../reducers';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import './Login.css';
 
 class Login extends Component {
@@ -90,7 +90,7 @@ class Login extends Component {
               placeholder='Password'/>
           </div>
           <div>
-            <RaisedButton type='submit'>Login</RaisedButton>
+            <Button type='submit'>Login</Button>
           </div>
         </form>
       </div>

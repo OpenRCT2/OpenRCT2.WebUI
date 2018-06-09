@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { getAuth } from '../reducers';
 import './App.css';
 import LandingNavBar from './LandingNavBar'
-import AppBar from 'material-ui/AppBar'
+import AppBar from '@material-ui/core/AppBar'
 
 class AppLanding extends Component {
   render() {
